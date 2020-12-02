@@ -1,0 +1,8 @@
+<h1>Show Picture tag</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.picture_tag_path(@conn, :edit, @picture_tag) %></span>
+<span><%= link "Back", to: Routes.picture_tag_path(@conn, :index) %></span>

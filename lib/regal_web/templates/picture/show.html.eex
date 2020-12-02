@@ -1,0 +1,53 @@
+<h1>Show Picture</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @picture.name %>
+  </li>
+
+  <li>
+    <strong>Width:</strong>
+    <%= @picture.width %>
+  </li>
+
+  <li>
+    <strong>Height:</strong>
+    <%= @picture.height %>
+  </li>
+
+  <li>
+    <strong>Format:</strong>
+    <%= @picture.format %>
+  </li>
+
+  <li>
+    <strong>Path:</strong>
+    <%= @picture.path %>
+  </li>
+
+  <li>
+    <strong>Sha1:</strong>
+    <%= @picture.sha1 %>
+  </li>
+
+  <li>
+    <strong>Filesize:</strong>
+    <%= @picture.filesize %>
+  </li>
+
+  <li>
+    <strong>External:</strong>
+    <%= @picture.external_id %>
+  </li>
+
+  <li>
+    <strong>Rank:</strong>
+    <%= @picture.rank %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>
+<span><%= link "Back", to: Routes.picture_path(@conn, :index) %></span>

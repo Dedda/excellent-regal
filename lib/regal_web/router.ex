@@ -17,6 +17,10 @@ defmodule RegalWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/galleries", GalleryController
+    resources "/pictures", PictureController
+    resources "/tags", TagController
+    resources "/picture_tags", PictureTagController
   end
 
   # Other scopes may use custom stacks.

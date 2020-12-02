@@ -1,0 +1,18 @@
+<h1>Show Gallery</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @gallery.name %>
+  </li>
+
+  <li>
+    <strong>Directory:</strong>
+    <%= @gallery.directory %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.gallery_path(@conn, :edit, @gallery) %></span>
+<span><%= link "Back", to: Routes.gallery_path(@conn, :index) %></span>
