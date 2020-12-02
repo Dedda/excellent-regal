@@ -12,5 +12,5 @@ defmodule Regal.Native do
 
     def init(_u, _p), do: :erlang.nif_error(:nif_not_loaded)
 
-    def scan(_p, _t), do: :erlang.nif_error(:nif_not_loaded)
+    def scan(_p, _c), do: :erlang.nif_error(:nif_not_loaded)
 end

@@ -1,5 +1,12 @@
+extern crate bmp;
+extern crate jpeg_decoder;
+#[macro_use]
+extern crate lazy_static;
+extern crate png;
+extern crate regex;
 #[macro_use]
 extern crate rustler;
+extern crate tiff;
 
 use rustler::{Encoder, Env, Error, Term};
 
@@ -8,7 +15,7 @@ mod scanner;
 mod atoms {
     rustler_atoms! {
         atom ok;
-        //atom error;
+        atom error;
         //atom __true__ = "true";
         //atom __false__ = "false";
     }
@@ -40,5 +47,9 @@ fn init<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
 fn scan<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
     let path: String = args[0].decode()?;
     let threads: usize = args[1].decode()?;
-    Ok(scanner::scan(&path, &threads).encode(env))
+    let scanned = scanner::scan(&path, &threads);
+    Ok(match scanned {
+        Ok(files) => (atoms::ok(), files).encode(env),
+        Err(msg) => (atoms::error(), msg).encode(env),
+    })
 }
