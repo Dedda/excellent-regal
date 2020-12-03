@@ -1,4 +1,4 @@
-defmodule Regal.Native.FileFilter do
+defmodule Regal.Scanner.FileFilter do
   defstruct [
     file_type_filter: nil,
     regex_filter: nil,

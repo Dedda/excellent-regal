@@ -1,7 +1,7 @@
 use std::fs::read_dir;
 
 #[derive(NifStruct)]
-#[module = "Regal.Native.FileFilter"]
+#[module = "Regal.Scanner.FileFilter"]
 pub struct FileFilter {
     pub file_type_filter: Option<String>,
     pub regex_filter: Option<String>,
@@ -9,7 +9,7 @@ pub struct FileFilter {
 }
 
 #[derive(NifStruct)]
-#[module = "Regal.Native.Filters"]
+#[module = "Regal.Scanner.Filters"]
 pub struct Filters {
     pub file_filters: Vec<FileFilter>,
     pub directory_filters: Vec<FileFilter>,
@@ -42,8 +42,8 @@ impl From<std::io::Error> for ScannerError {
     }
 }
 
-pub fn scan(folder: &str, threads: &usize, filters: &Filters) -> Result<Vec<String>, String> {
-    println!("Scanning {} with {} threads", folder, threads);
+pub fn scan(folder: &str, filters: &Filters) -> Result<Vec<String>, String> {
+    println!("Scanning {}", folder);
     Ok(find_files(&folder, &folder, &filters)?)
 }
 

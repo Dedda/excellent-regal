@@ -10,6 +10,9 @@ use Mix.Config
 config :regal,
   ecto_repos: [Regal.Repo]
 
+config :regal, Regal.Scanner,
+  filters: {}
+
 # Configures the endpoint
 config :regal, RegalWeb.Endpoint,
   url: [host: "localhost"],

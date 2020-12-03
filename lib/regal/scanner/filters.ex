@@ -1,4 +1,4 @@
-defmodule Regal.Native.Filters do
+defmodule Regal.Scanner.Filters do
   @enforce_keys [:file_filters, :directory_filters]
   defstruct [
     file_filters: [],
@@ -6,7 +6,7 @@ defmodule Regal.Native.Filters do
   ]
 
   @type t() :: %__MODULE__{
-    file_filters: list(Regal.Native.FileFilter.t()),
-    directory_filters: list(Regal.Native.FileFilter.t()),
+    file_filters: list(Regal.Scanner.FileFilter.t()),
+    directory_filters: list(Regal.Scanner.FileFilter.t()),
   }
 end

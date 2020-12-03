@@ -27,7 +27,7 @@ rustler::rustler_export_nifs! {
     [
         ("add", 2, add),
         ("init", 2, init),
-        ("scan", 3, scan),
+        ("scan", 2, scan),
     ],
     Some(on_load)
 }
@@ -53,9 +53,8 @@ fn init<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
 
 fn scan<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
     let path: String = args[0].decode()?;
-    let threads: usize = args[1].decode()?;
     let filters: Filters = args[2].decode()?;
-    let scanned = scanner::scan(&path, &threads, &filters);
+    let scanned = scanner::scan(&path, &filters);
     Ok(match scanned {
         Ok(files) => (atoms::ok(), files).encode(env),
         Err(msg) => (atoms::error(), msg).encode(env),
