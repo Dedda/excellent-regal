@@ -1,23 +1,18 @@
 use std::fs::read_dir;
-use std::io::Error;
 
-enum FileFilter {
-    FileTypeFilter(String),
-    RegexFilter(String),
+#[derive(NifStruct)]
+#[module = "Regal.Native.FileFilter"]
+pub struct FileFilter {
+    pub file_type_filter: Option<String>,
+    pub regex_filter: Option<String>,
+    pub exclude: bool,
 }
 
-struct Filters {
-    pub file_filters: Vec<(FileFilter, bool)>,
-    pub directory_filters: Vec<(FileFilter, bool)>,
-}
-
-impl Filters {
-    fn empty() -> Self {
-        Self {
-            file_filters: vec![],
-            directory_filters: vec![],
-        }
-    }
+#[derive(NifStruct)]
+#[module = "Regal.Native.Filters"]
+pub struct Filters {
+    pub file_filters: Vec<FileFilter>,
+    pub directory_filters: Vec<FileFilter>,
 }
 
 impl Filters {
@@ -30,14 +25,12 @@ impl Filters {
 }
 
 enum ScannerError {
-    General(String),
     Io(std::io::Error),
 }
 
 impl From<ScannerError> for String {
     fn from(e: ScannerError) -> String {
         match e {
-            ScannerError::General(s) => s,
             ScannerError::Io(io) => io.to_string(),
         }
     }
@@ -49,9 +42,9 @@ impl From<std::io::Error> for ScannerError {
     }
 }
 
-pub fn scan(folder: &str, threads: &usize) -> Result<Vec<String>, String> {
+pub fn scan(folder: &str, threads: &usize, filters: &Filters) -> Result<Vec<String>, String> {
     println!("Scanning {} with {} threads", folder, threads);
-    Ok(find_files(&folder, &folder, &Filters::empty())?)
+    Ok(find_files(&folder, &folder, &filters)?)
 }
 
 fn find_files(root: &str, folder: &str, filters: &Filters) -> Result<Vec<String>, ScannerError> {

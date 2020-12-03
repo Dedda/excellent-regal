@@ -9,6 +9,7 @@ extern crate rustler;
 extern crate tiff;
 
 use rustler::{Encoder, Env, Error, Term};
+use crate::scanner::Filters;
 
 mod scanner;
 
@@ -26,9 +27,15 @@ rustler::rustler_export_nifs! {
     [
         ("add", 2, add),
         ("init", 2, init),
-        ("scan", 2, scan),
+        ("scan", 3, scan),
     ],
-    None
+    Some(on_load)
+}
+
+fn on_load(env: Env, _info: Term) -> bool {
+    resource_struct_init!(scanner::FileFilter, env);
+    resource_struct_init!(scanner::Filters, env);
+    true
 }
 
 fn add<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
@@ -47,7 +54,8 @@ fn init<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
 fn scan<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
     let path: String = args[0].decode()?;
     let threads: usize = args[1].decode()?;
-    let scanned = scanner::scan(&path, &threads);
+    let filters: Filters = args[2].decode()?;
+    let scanned = scanner::scan(&path, &threads, &filters);
     Ok(match scanned {
         Ok(files) => (atoms::ok(), files).encode(env),
         Err(msg) => (atoms::error(), msg).encode(env),
