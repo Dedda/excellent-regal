@@ -389,4 +389,100 @@ defmodule Regal.Galleries do
   def change_picture_tag(%PictureTag{} = picture_tag, attrs \\ %{}) do
     PictureTag.changeset(picture_tag, attrs)
   end
+
+  alias Regal.Galleries.GalleryPicture
+
+  @doc """
+  Returns the list of gallery_pictures.
+
+  ## Examples
+
+      iex> list_gallery_pictures()
+      [%GalleryPicture{}, ...]
+
+  """
+  def list_gallery_pictures do
+    Repo.all(GalleryPicture)
+  end
+
+  @doc """
+  Gets a single gallery_picture.
+
+  Raises `Ecto.NoResultsError` if the Gallery picture does not exist.
+
+  ## Examples
+
+      iex> get_gallery_picture!(123)
+      %GalleryPicture{}
+
+      iex> get_gallery_picture!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_gallery_picture!(id), do: Repo.get!(GalleryPicture, id)
+
+  @doc """
+  Creates a gallery_picture.
+
+  ## Examples
+
+      iex> create_gallery_picture(%{field: value})
+      {:ok, %GalleryPicture{}}
+
+      iex> create_gallery_picture(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_gallery_picture(attrs \\ %{}) do
+    %GalleryPicture{}
+    |> GalleryPicture.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a gallery_picture.
+
+  ## Examples
+
+      iex> update_gallery_picture(gallery_picture, %{field: new_value})
+      {:ok, %GalleryPicture{}}
+
+      iex> update_gallery_picture(gallery_picture, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_gallery_picture(%GalleryPicture{} = gallery_picture, attrs) do
+    gallery_picture
+    |> GalleryPicture.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a gallery_picture.
+
+  ## Examples
+
+      iex> delete_gallery_picture(gallery_picture)
+      {:ok, %GalleryPicture{}}
+
+      iex> delete_gallery_picture(gallery_picture)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_gallery_picture(%GalleryPicture{} = gallery_picture) do
+    Repo.delete(gallery_picture)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking gallery_picture changes.
+
+  ## Examples
+
+      iex> change_gallery_picture(gallery_picture)
+      %Ecto.Changeset{data: %GalleryPicture{}}
+
+  """
+  def change_gallery_picture(%GalleryPicture{} = gallery_picture, attrs \\ %{}) do
+    GalleryPicture.changeset(gallery_picture, attrs)
+  end
 end

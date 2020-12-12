@@ -34,7 +34,7 @@ defmodule RegalWeb.GalleryControllerTest do
       assert redirected_to(conn) == Routes.gallery_path(conn, :show, id)
 
       conn = get(conn, Routes.gallery_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Gallery"
+      assert html_response(conn, 200) =~ "some name"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -60,7 +60,7 @@ defmodule RegalWeb.GalleryControllerTest do
       assert redirected_to(conn) == Routes.gallery_path(conn, :show, gallery)
 
       conn = get(conn, Routes.gallery_path(conn, :show, gallery))
-      assert html_response(conn, 200) =~ "some updated directory"
+      assert html_response(conn, 200) =~ "some updated name"
     end
 
     test "renders errors when data is invalid", %{conn: conn, gallery: gallery} do

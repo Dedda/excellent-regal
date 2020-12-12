@@ -1,6 +1,6 @@
 extern crate bmp;
 extern crate jpeg_decoder;
-#[macro_use]
+// #[macro_use]
 extern crate lazy_static;
 extern crate png;
 extern crate regex;
@@ -25,7 +25,6 @@ mod atoms {
 rustler::rustler_export_nifs! {
     "Elixir.Regal.Native",
     [
-        ("add", 2, add),
         ("init", 2, init),
         ("scan", 2, scan),
     ],
@@ -36,13 +35,6 @@ fn on_load(env: Env, _info: Term) -> bool {
     resource_struct_init!(scanner::FileFilter, env);
     resource_struct_init!(scanner::Filters, env);
     true
-}
-
-fn add<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
-    let num1: i64 = args[0].decode()?;
-    let num2: i64 = args[1].decode()?;
-
-    Ok((atoms::ok(), num1 + num2).encode(env))
 }
 
 fn init<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {

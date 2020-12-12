@@ -1,7 +1,17 @@
 /* This file is for your main application css. */
 @import "./phoenix.css";
+@import "./gallery";
 
 /* Alerts and form errors */
+body {
+  background-color: #333333;
+  color: #cccccc;
+}
+
+a {
+  color: #77bbff;
+}
+
 .alert {
   padding: 15px;
   margin-bottom: 20px;

@@ -1,0 +1,8 @@
+<h1>Show Gallery picture</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.gallery_picture_path(@conn, :edit, @gallery_picture) %></span>
+<span><%= link "Back", to: Routes.gallery_picture_path(@conn, :index) %></span>

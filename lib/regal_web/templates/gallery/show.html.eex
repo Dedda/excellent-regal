@@ -1,18 +1,81 @@
-<h1>Show Gallery</h1>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @gallery.name %>
-  </li>
-
-  <li>
-    <strong>Directory:</strong>
-    <%= @gallery.directory %>
-  </li>
-
-</ul>
+<h1><%= @gallery.name %></h1>
 
 <span><%= link "Edit", to: Routes.gallery_path(@conn, :edit, @gallery) %></span>
 <span><%= link "Back", to: Routes.gallery_path(@conn, :index) %></span>
+
+<div class="gallery-wrapper">
+
+  <div class="gallery-container w-3 h-2">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?nature" alt="nature">
+      </div>
+      <div class="text">nature 1</div>
+    </div>
+  </div>
+
+  <div class="gallery-container w-3 h-3">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?people" alt="people">
+      </div>
+      <div class="text">people 2</div>
+    </div>
+  </div>
+
+  <div class="gallery-container h-2">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?sport" alt="sport">
+      </div>
+      <div class="text">sport 3</div>
+    </div>
+  </div>
+
+  <div class="gallery-container w-2">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?fitness" alt="fitness">
+      </div>
+      <div class="text">fitness 4</div>
+    </div>
+  </div>
+
+  <div class="gallery-container w-4 h-1">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?food" alt="food">
+      </div>
+      <div class="text">food 5</div>
+    </div>
+  </div>
+
+  <div class="gallery-container">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?travel" alt="travel">
+      </div>
+      <div class="text">travel 6</div>
+    </div>
+  </div>
+
+  <div class="gallery-container h-2">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?art" alt="art">
+      </div>
+      <div class="text">art 7</div>
+    </div>
+  </div>
+
+  <div class="gallery-container">
+    <div class="gallery-item">
+      <div class="image">
+        <img src="http://source.unsplash.com/1600x900/?cars" alt="cars">
+      </div>
+      <div class="text">cars 8</div>
+    </div>
+  </div>
+
+
+</div>

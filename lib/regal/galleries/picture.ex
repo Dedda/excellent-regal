@@ -12,7 +12,6 @@ defmodule Regal.Galleries.Picture do
     field :rank, :integer
     field :sha1, :string
     field :width, :integer
-    field :gallery_id, :id
 
     timestamps()
   end

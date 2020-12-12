@@ -264,4 +264,65 @@ defmodule Regal.GalleriesTest do
 
   """
 
+  @doc """
+
+  describe "gallery_pictures" do
+    alias Regal.Galleries.GalleryPicture
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def gallery_picture_fixture(attrs \\ %{}) do
+      {:ok, gallery_picture} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Galleries.create_gallery_picture()
+
+      gallery_picture
+    end
+
+    test "list_gallery_pictures/0 returns all gallery_pictures" do
+      gallery_picture = gallery_picture_fixture()
+      assert Galleries.list_gallery_pictures() == [gallery_picture]
+    end
+
+    test "get_gallery_picture!/1 returns the gallery_picture with given id" do
+      gallery_picture = gallery_picture_fixture()
+      assert Galleries.get_gallery_picture!(gallery_picture.id) == gallery_picture
+    end
+
+    test "create_gallery_picture/1 with valid data creates a gallery_picture" do
+      assert {:ok, %GalleryPicture{} = gallery_picture} = Galleries.create_gallery_picture(@valid_attrs)
+    end
+
+    test "create_gallery_picture/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Galleries.create_gallery_picture(@invalid_attrs)
+    end
+
+    test "update_gallery_picture/2 with valid data updates the gallery_picture" do
+      gallery_picture = gallery_picture_fixture()
+      assert {:ok, %GalleryPicture{} = gallery_picture} = Galleries.update_gallery_picture(gallery_picture, @update_attrs)
+    end
+
+    test "update_gallery_picture/2 with invalid data returns error changeset" do
+      gallery_picture = gallery_picture_fixture()
+      assert {:error, %Ecto.Changeset{}} = Galleries.update_gallery_picture(gallery_picture, @invalid_attrs)
+      assert gallery_picture == Galleries.get_gallery_picture!(gallery_picture.id)
+    end
+
+    test "delete_gallery_picture/1 deletes the gallery_picture" do
+      gallery_picture = gallery_picture_fixture()
+      assert {:ok, %GalleryPicture{}} = Galleries.delete_gallery_picture(gallery_picture)
+      assert_raise Ecto.NoResultsError, fn -> Galleries.get_gallery_picture!(gallery_picture.id) end
+    end
+
+    test "change_gallery_picture/1 returns a gallery_picture changeset" do
+      gallery_picture = gallery_picture_fixture()
+      assert %Ecto.Changeset{} = Galleries.change_gallery_picture(gallery_picture)
+    end
+  end
+
+  """
+
 end
