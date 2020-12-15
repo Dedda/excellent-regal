@@ -22,6 +22,7 @@ defmodule RegalWeb.Router do
     resources "/gallery_pictures", GalleryPictureController
     resources "/tags", TagController
     resources "/picture_tags", PictureTagController
+    get "/config", ConfigController, :index
   end
 
   # Other scopes may use custom stacks.

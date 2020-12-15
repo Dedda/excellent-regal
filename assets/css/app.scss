@@ -44,3 +44,19 @@ a {
   display: block;
   margin: -1rem 0 2rem;
 }
+
+.navbar {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.navbar div:not(:first-child) {
+  border-left: #606c76 1px solid;
+  padding-left: 3em;
+}
+
+.navbar div:not(:last-child) {
+  padding-right: 3em;
+}
