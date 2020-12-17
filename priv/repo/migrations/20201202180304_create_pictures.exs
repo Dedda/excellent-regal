@@ -10,7 +10,7 @@ defmodule Regal.Repo.Migrations.CreatePictures do
       add :path, :string
       add :sha1, :string
       add :filesize, :integer
-      add :external_id, :uuid
+      add :external_id, :string
       add :rank, :integer
       add :gallery_id, references(:galleries, on_delete: :nothing)
 

@@ -3,7 +3,7 @@ defmodule Regal.Galleries.Picture do
   import Ecto.Changeset
 
   schema "pictures" do
-    field :external_id, Ecto.UUID
+    field :external_id, :string
     field :filesize, :integer
     field :format, :string
     field :height, :integer

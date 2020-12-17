@@ -59,4 +59,12 @@ defmodule RegalWeb.PictureController do
     |> put_flash(:info, "Picture deleted successfully.")
     |> redirect(to: Routes.picture_path(conn, :index))
   end
+
+  def raw(conn, %{"id" => external_id}) do
+    picture = Galleries.get_picture_by_external_id!(external_id)
+    data = File.read!(picture.path)
+    conn
+    |> put_resp_content_type("image/" <> picture.format)
+    |> send_resp(:ok, data)
+  end
 end

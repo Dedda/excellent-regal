@@ -150,4 +150,10 @@ defmodule Regal.Galleries do
       |> Enum.map(fn gp -> gp.picture_id end)
     Repo.all(from p in Picture, where: p.id in ^gallery_pictures)
   end
+
+  def get_picture_by_external_id!(external_id) do
+    pic_query = from p in Picture,
+                where: p.external_id == ^external_id
+    Repo.one!(pic_query)
+  end
 end

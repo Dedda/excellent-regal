@@ -13,7 +13,7 @@ defmodule Regal.Galleries.Gallery do
   @doc false
   def changeset(gallery, attrs) do
     gallery
-    |> cast(attrs, [:name, :directory])
+    |> cast(attrs, [:name, :directory, :parent_id])
     |> validate_required([:name, :directory])
   end
 end

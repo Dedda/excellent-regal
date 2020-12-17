@@ -11,5 +11,6 @@ defmodule Regal.Repo.Migrations.CreateGalleries do
     end
 
     create index(:galleries, [:parent_id])
+    create unique_index(:galleries, [:directory])
   end
 end

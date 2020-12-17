@@ -19,6 +19,7 @@ defmodule RegalWeb.Router do
     get "/", PageController, :index
     resources "/galleries", GalleryController
     resources "/pictures", PictureController
+    get "/pictures/raw/:id", PictureController, :raw
     resources "/gallery_pictures", GalleryPictureController
     resources "/tags", TagController
     resources "/picture_tags", PictureTagController
