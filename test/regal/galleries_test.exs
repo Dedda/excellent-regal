@@ -262,9 +262,7 @@ defmodule Regal.GalleriesTest do
     end
   end
 
-  """
 
-  @doc """
 
   describe "gallery_pictures" do
     alias Regal.Galleries.GalleryPicture

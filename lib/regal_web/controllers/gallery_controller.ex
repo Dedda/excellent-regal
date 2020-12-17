@@ -28,7 +28,8 @@ defmodule RegalWeb.GalleryController do
 
   def show(conn, %{"id" => id}) do
     gallery = Galleries.get_gallery!(id)
-    render(conn, "show.html", gallery: gallery)
+    pictures = Galleries.pictures_for_gallery!(gallery.id)
+    render(conn, "show.html", gallery: gallery, pictures: pictures)
   end
 
   def edit(conn, %{"id" => id}) do

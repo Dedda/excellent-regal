@@ -30,10 +30,11 @@ defmodule Regal.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   defp rustler_crates do
-    [regal_native: [
-      path: "native/regal_native",
-      mode: rustc_mode(Mix.env),
-    ]]
+#    [regal_native: [
+#      path: "native/regal_native",
+#      mode: rustc_mode(Mix.env),
+#    ]]
+    []
   end
 
   defp rustc_mode(:prod), do: :release

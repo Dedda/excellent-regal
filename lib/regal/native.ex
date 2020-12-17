@@ -1,5 +1,5 @@
 defmodule Regal.Native do
-    use Rustler, otp_app: :regal, crate: "regal_native"
+#    use Rustler, otp_app: :regal, crate: "regal_native"
 
     def initiazile do
         db_user = Application.get_env(:regal, Regal.Repo)[:username]
