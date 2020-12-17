@@ -67,4 +67,8 @@ defmodule RegalWeb.PictureController do
     |> put_resp_content_type("image/" <> picture.format)
     |> send_resp(:ok, data)
   end
+
+  def thumb(conn, %{"id" => _external_id} = params) do
+    raw(conn, params)
+  end
 end

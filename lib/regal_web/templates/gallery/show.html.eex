@@ -9,7 +9,7 @@
   <div class="gallery-container w-2 h-2">
     <div class="gallery-item">
       <div class="image">
-        <img src="<%= Routes.picture_path(@conn, :raw, picture.external_id) %>">
+        <img src="<%= Routes.picture_path(@conn, :thumb, picture.external_id) %>">
       </div>
     </div>
   </div>
