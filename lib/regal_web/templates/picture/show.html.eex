@@ -1,12 +1,9 @@
-<h1>Show Picture</h1>
+<h1>Showing: <%= @picture.name %></h1>
+
+<img src="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>"
+  width="100%">
 
 <ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @picture.name %>
-  </li>
-
   <li>
     <strong>Width:</strong>
     <%= @picture.width %>
@@ -46,7 +43,6 @@
     <strong>Rank:</strong>
     <%= @picture.rank %>
   </li>
-
 </ul>
 
 <span><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>

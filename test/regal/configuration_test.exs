@@ -19,11 +19,6 @@ defmodule Regal.ConfigurationTest do
       config_value
     end
 
-    test "list_config_values/0 returns all config_values" do
-      config_value = config_value_fixture()
-      assert Configuration.list_config_values() == [config_value]
-    end
-
     test "get_config_value!/1 returns the config_value with given id" do
       config_value = config_value_fixture()
       assert Configuration.get_config_value!(config_value.id) == config_value

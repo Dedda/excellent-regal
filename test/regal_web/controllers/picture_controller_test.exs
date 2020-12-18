@@ -34,7 +34,7 @@ defmodule RegalWeb.PictureControllerTest do
       assert redirected_to(conn) == Routes.picture_path(conn, :show, id)
 
       conn = get(conn, Routes.picture_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Picture"
+      assert html_response(conn, 200) =~ "Showing: "
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
