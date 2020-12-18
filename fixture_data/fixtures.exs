@@ -1,5 +1,5 @@
+alias Regal.Configuration
 alias Regal.Galleries
-alias Regal.Repo
 alias Regal.Scanner
 
 root = File.cwd!
@@ -31,6 +31,10 @@ defmodule Fixtures do
     end
 end
 
+IO.puts("====================")
+IO.puts(" Creating galleries")
+IO.puts("====================")
+
 cakes = Fixtures.create_gallery_if_not_exists("Cakes", galleries_dir <> "/cakes")
 mountains = Fixtures.create_gallery_if_not_exists("Mountains", galleries_dir <> "/mountains")
 
@@ -38,8 +42,16 @@ fixture_tag = Fixtures.create_tag_if_not_exists("yellow", "fixture", "Fixture pi
 cake_tag = Fixtures.create_tag_if_not_exists("red", "cake", "Picture of a cake")
 mountain_tag = Fixtures.create_tag_if_not_exists("blue", "mountain", "Picture of a mountain")
 
+IO.puts("===================")
+IO.puts(" Creating pictures")
+IO.puts("===================")
+
 Scanner.index_gallery(cakes)
 Scanner.index_gallery(mountains)
+
+IO.puts("==================")
+IO.puts(" Tagging pictures")
+IO.puts("==================")
 
 Galleries.pictures_for_gallery!(cakes.id)
 |> Enum.each(fn pic ->
@@ -57,9 +69,18 @@ Galleries.pictures_for_gallery!(mountains.id)
     })
 end)
 
-Enum.map(Galleries.list_pictures(), fn pic ->
+Enum.each(Galleries.list_pictures(), fn pic ->
     Galleries.create_picture_tag(%{
         tag_id: fixture_tag.id,
         picture_id: pic.id,
     })
 end)
+
+IO.puts("=============================")
+IO.puts(" Creating missing thumbnails")
+IO.puts("=============================")
+
+Enum.each(Galleries.list_pictures(), fn pic ->
+    Scanner.create_thumb(pic)
+end)
+

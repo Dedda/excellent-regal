@@ -4,6 +4,7 @@ defmodule Regal.Scanner do
   alias Regal.Native
   alias Regal.Galleries
   alias Regal.Galleries.Gallery
+  alias Regal.Galleries.Picture
 
   @valid_extensions ["png", "jpg", "jpeg"]
 
@@ -35,7 +36,15 @@ defmodule Regal.Scanner do
     })
   end
 
-  def find_picture_files_in_gallery(%Gallery{
+  def create_thumb(%Picture{} = pic) do
+    {w, h} = Configuration.get_thumb_size!()
+    thumb_path = Galleries.thumb_path_for_picture!(pic)
+    if !File.exists?(thumb_path) do
+      Native.thumb_picture(pic.path, thumb_path, w, h)
+    end
+  end
+
+  defp find_picture_files_in_gallery(%Gallery{
     :id => gallery_id,
     :directory => dir,
   }) do
@@ -56,7 +65,7 @@ defmodule Regal.Scanner do
     |> List.last()
   end
 
-  def hash_file(path) do
+  defp hash_file(path) do
     :crypto.hash(:sha, File.read!(path))
     |> Base.encode16()
     |> String.downcase()
