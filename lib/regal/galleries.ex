@@ -11,6 +11,12 @@ defmodule Regal.Galleries do
 
   def get_gallery!(id), do: Repo.get!(Gallery, id)
 
+  def get_sub_galleries(parent_id) do
+    query = from g in Gallery,
+            where: g.parent_id == ^parent_id
+    Repo.all(query)
+  end
+
   def create_gallery(attrs \\ %{}) do
     %Gallery{}
     |> Gallery.changeset(attrs)
@@ -149,6 +155,12 @@ defmodule Regal.Galleries do
     gallery_pictures = Repo.all(gal_pic_query)
       |> Enum.map(fn gp -> gp.picture_id end)
     Repo.all(from p in Picture, where: p.id in ^gallery_pictures)
+  end
+
+  def picture_by_path(path) do
+    query = from p in Picture,
+            where: p.path == ^path
+    Repo.one(query)
   end
 
   def get_picture_by_external_id!(external_id) do

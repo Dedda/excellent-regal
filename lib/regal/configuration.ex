@@ -8,6 +8,8 @@ defmodule Regal.Configuration do
 
   alias Regal.Configuration.ConfigValue
 
+  @project_root File.cwd!
+
   def list_config_values do
     Repo.all(ConfigValue)
   end
@@ -32,5 +34,33 @@ defmodule Regal.Configuration do
 
   def change_config_value(%ConfigValue{} = config_value, attrs \\ %{}) do
     ConfigValue.changeset(config_value, attrs)
+  end
+
+
+
+  def project_root do
+    @project_root
+  end
+
+  def get_thumbs_dir! do
+    %ConfigValue{
+      value: path
+    } = Repo.one!(from c in ConfigValue,
+                  where: c.name == ^"thumbs_dir")
+    String.replace(path, "?mixdir?", @project_root)
+  end
+
+  def get_thumb_size! do
+    %ConfigValue{
+      value: width
+    } = Repo.one!(from c in ConfigValue,
+                  where: c.name == ^"thumb_size_w")
+    %ConfigValue{
+      value: height
+    } = Repo.one!(from c in ConfigValue,
+                  where: c.name == ^"thumb_size_h")
+    {w, _} = Integer.parse(width)
+    {h, _} = Integer.parse(height)
+    {w, h}
   end
 end

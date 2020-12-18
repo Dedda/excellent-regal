@@ -1,4 +1,6 @@
 alias Regal.Galleries
+alias Regal.Repo
+alias Regal.Scanner
 
 root = File.cwd!
 fixture_dir = root <> "/fixture_data"
@@ -32,46 +34,22 @@ galleries_dir = fixture_dir <> "/galleries"
     description: "Picture of a mountain",
 })
 
-Enum.map(1..5 , fn i ->
-    cake_name = "cake-0#{i}"
-    mountain_name = "mountain-0#{i}"
-    {:ok, cake_pic} = Galleries.create_picture(%{
-        external_id: UUID.uuid4(),
-        format: "jpg",
-        name: cake_name,
-        path: cakes.directory <> "/" <> cake_name <> ".jpg",
-        sha1: "-",
-        rank: i,
-        filesize: 0,
-        width: 0,
-        height: 0,
-    })
-    {:ok, mountain_pic} = Galleries.create_picture(%{
-        external_id: UUID.uuid4(),
-        format: "jpg",
-        name: mountain_name,
-        path: mountains.directory <> "/" <> mountain_name <> ".jpg",
-        sha1: "-",
-        rank: i,
-        filesize: 0,
-        width: 0,
-        height: 0,
-    })
-    {:ok, _} = Galleries.create_gallery_picture(%{
-        gallery_id: cakes.id,
-        picture_id: cake_pic.id,
-    })
-    {:ok, _} = Galleries.create_gallery_picture(%{
-        gallery_id: mountains.id,
-        picture_id: mountain_pic.id,
-    })
+Scanner.index_gallery(cakes)
+Scanner.index_gallery(mountains)
+
+Galleries.pictures_for_gallery!(cakes.id)
+|> Enum.each(fn pic ->
     {:ok, _} = Galleries.create_picture_tag(%{
+        picture_id: pic.id,
         tag_id: cake_tag.id,
-        picture_id: cake_pic.id,
     })
+end)
+
+Galleries.pictures_for_gallery!(mountains.id)
+|> Enum.each(fn pic ->
     {:ok, _} = Galleries.create_picture_tag(%{
+        picture_id: pic.id,
         tag_id: mountain_tag.id,
-        picture_id: mountain_pic.id,
     })
 end)
 
