@@ -1,15 +1,18 @@
 defmodule Regal.Native do
-#    use Rustler, otp_app: :regal, crate: "regal_native"
+    use Rustler, otp_app: :regal, crate: "regal_native"
 
-    def initiazile do
-        db_user = Application.get_env(:regal, Regal.Repo)[:username]
-        db_pass = Application.get_env(:regal, Regal.Repo)[:password]
-        init(db_user, db_pass)
-    end
+    alias Regal.Native.ScannedImage
 
-    @spec init(String.t, String.t) :: atom()
-    def init(_u, _p), do: :erlang.nif_error(:nif_not_loaded)
+    #    def scan_picture(p) do
+    #        IO.inspect(["Scanning pic: ", p])
+    #        {:ok, %ScannedImage{
+    #            format: "png",
+    #            width: 1,
+    #            height: 1,
+    #        }}
+    #    end
 
-    @spec scan(String.t, %Regal.Scanner.Filters{}) :: tuple()
-    def scan(_p, _f), do: :erlang.nif_error(:nif_not_loaded)
+    @spec scan_picture(String.t, String.t, integer, integer) :: tuple()
+    def scan_picture(_s, _d, _w, _h), do: :erlang.nif_error(:nif_not_loaded)
+
 end
