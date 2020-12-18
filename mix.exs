@@ -32,12 +32,9 @@ defmodule Regal.MixProject do
   defp rustler_crates do
     [regal_native: [
       path: "native/regal_native",
-      mode: rustc_mode(Mix.env),
+      mode: :release,
     ]]
   end
-
-  defp rustc_mode(:prod), do: :release
-  defp rustc_mode(_), do: :debug
 
   # Specifies your project dependencies.
   #
