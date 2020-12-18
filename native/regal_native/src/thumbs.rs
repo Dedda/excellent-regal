@@ -40,7 +40,7 @@ impl From<image::ImageError> for ThumbsError {
     }
 }
 
-pub fn create_thumb(src_path: &str, thumb_path: &str, size: (usize, usize)) -> Result<ScannedImage, ThumbsError> {
+pub fn scan_picture(src_path: &str, thumb_path: &str, size: (usize, usize)) -> Result<ScannedImage, ThumbsError> {
     let (width, height) = size;
     let pic = image::open(src_path)?;
     let external_id = Uuid::new_v4().to_simple().to_string();
@@ -53,4 +53,12 @@ pub fn create_thumb(src_path: &str, thumb_path: &str, size: (usize, usize)) -> R
         format: format_from_path(src_path).to_string(),
         external_id,
     })
+}
+
+pub fn create_thumb(src_path: &str, thumb_path: &str, size: (usize, usize)) -> Result<(), ThumbsError> {
+    let (width, height) = size;
+    let pic = image::open(src_path)?;
+    let thumb = pic.resize_to_fill(width as u32, height as u32, image::imageops::FilterType::Gaussian);
+    thumb.save(thumb_path)?;
+    Ok(())
 }

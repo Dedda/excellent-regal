@@ -10,11 +10,7 @@ path = "src/lib.rs"
 crate-type = ["dylib"]
 
 [dependencies]
-bmp = "0.5"
 image = "0.23"
-lazy_static = "1.0"
-regex = "1.4"
 rustler = "0.21.1"
 sha1 = "0.6"
-tiff = "0.6"
 uuid = { version = "0.8", features = ["v4"] }
