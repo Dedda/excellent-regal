@@ -1,6 +1,7 @@
 defmodule RegalWeb.PictureController do
   use RegalWeb, :controller
 
+  alias Regal.Configuration
   alias Regal.Galleries
   alias Regal.Galleries.Picture
 
@@ -68,7 +69,11 @@ defmodule RegalWeb.PictureController do
     |> send_resp(:ok, data)
   end
 
-  def thumb(conn, %{"id" => _external_id} = params) do
-    raw(conn, params)
+  def thumb(conn, %{"id" => external_id}) do
+    path = Configuration.get_thumbs_dir!() <> "/" <> external_id <> ".png"
+    data = File.read!(path)
+    conn
+    |> put_resp_content_type("image/png")
+    |> send_resp(:ok, data)
   end
 end
