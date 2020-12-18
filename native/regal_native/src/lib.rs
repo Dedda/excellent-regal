@@ -1,17 +1,16 @@
 extern crate bmp;
-extern crate jpeg_decoder;
+extern crate image;
 // #[macro_use]
 extern crate lazy_static;
-extern crate png;
 extern crate regex;
 #[macro_use]
 extern crate rustler;
 extern crate tiff;
+extern crate uuid;
 
 use rustler::{Encoder, Env, Error, Term};
-use crate::scanner::Filters;
 
-mod scanner;
+mod thumbs;
 
 mod atoms {
     rustler_atoms! {
@@ -25,30 +24,32 @@ mod atoms {
 rustler::rustler_export_nifs! {
     "Elixir.Regal.Native",
     [
-        ("init", 2, init),
-        ("scan", 2, scan),
+        ("scan_picture", 4, scan_picture),
     ],
     Some(on_load)
 }
 
 fn on_load(env: Env, _info: Term) -> bool {
-    resource_struct_init!(scanner::FileFilter, env);
-    resource_struct_init!(scanner::Filters, env);
+    resource_struct_init!(thumbs::ScannedImage, env);
     true
 }
 
-fn init<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
-    let _username: String = args[0].decode()?;
-    let _password: String = args[1].decode()?;
-    Ok((atoms::ok()).encode(env))
+fn scan_picture<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
+    let src_path: String = args[0].decode()?;
+    let thumb_path: String = args[1].decode()?;
+    let width: usize = args[2].decode()?;
+    let height: usize = args[3].decode()?;
+    let thumb = thumbs::create_thumb(&src_path, &thumb_path, (width, height));
+    Ok(match thumb {
+        Ok(scanned) => (atoms::ok(), scanned).encode(env),
+        Err(msg) => (atoms::error(), String::from(msg)).encode(env),
+    })
 }
 
-fn scan<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
-    let path: String = args[0].decode()?;
-    let filters: Filters = args[2].decode()?;
-    let scanned = scanner::scan(&path, &filters);
-    Ok(match scanned {
-        Ok(files) => (atoms::ok(), files).encode(env),
-        Err(msg) => (atoms::error(), msg).encode(env),
-    })
+pub fn format_from_path(path: &str) -> &'static str {
+    match path.split(".").last() {
+        Some("png") => "png",
+        Some("jpg") | Some("jpeg") => "jpeg",
+        _ => "",
+    }
 }
