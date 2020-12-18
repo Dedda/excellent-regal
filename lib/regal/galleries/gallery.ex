@@ -14,6 +14,7 @@ defmodule Regal.Galleries.Gallery do
   def changeset(gallery, attrs) do
     gallery
     |> cast(attrs, [:name, :directory, :parent_id])
+    |> unique_constraint([:directory])
     |> validate_required([:name, :directory])
   end
 end

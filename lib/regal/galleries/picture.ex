@@ -20,6 +20,7 @@ defmodule Regal.Galleries.Picture do
   def changeset(picture, attrs) do
     picture
     |> cast(attrs, [:name, :width, :height, :format, :path, :sha1, :filesize, :external_id, :rank])
+    |> unique_constraint([:path])
     |> validate_required([:name, :width, :height, :format, :path, :sha1, :filesize, :external_id, :rank])
   end
 end

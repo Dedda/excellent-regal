@@ -13,6 +13,7 @@ defmodule Regal.Galleries.PictureTag do
   def changeset(picture_tag, attrs) do
     picture_tag
     |> cast(attrs, [:picture_id, :tag_id])
+    |> unique_constraint([:picture_id, :tag_id])
     |> validate_required([])
   end
 end

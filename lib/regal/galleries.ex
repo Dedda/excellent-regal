@@ -23,6 +23,10 @@ defmodule Regal.Galleries do
     |> Repo.insert()
   end
 
+  def gallery_for_path(path) do
+    Repo.one(from g in Gallery, where: g.directory == ^path)
+  end
+  
   def update_gallery(%Gallery{} = gallery, attrs) do
     gallery
     |> Gallery.changeset(attrs)
@@ -77,6 +81,10 @@ defmodule Regal.Galleries do
     %Tag{}
     |> Tag.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def tag_by_name(name) do
+    Repo.one(from t in Tag, where: t.name == ^name)
   end
 
   def update_tag(%Tag{} = tag, attrs) do
