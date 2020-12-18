@@ -18,5 +18,6 @@ defmodule Regal.Repo.Migrations.CreatePictures do
     end
 
     create index(:pictures, [:gallery_id])
+    create unique_index(:pictures, [:path])
   end
 end

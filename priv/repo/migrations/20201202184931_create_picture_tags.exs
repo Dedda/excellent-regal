@@ -11,5 +11,6 @@ defmodule Regal.Repo.Migrations.CreatePictureTags do
 
     create index(:picture_tags, [:picture_id])
     create index(:picture_tags, [:tag_id])
+    create unique_index(:picture_tags, [:picture_id, :tag_id])
   end
 end
