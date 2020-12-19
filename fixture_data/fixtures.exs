@@ -5,6 +5,16 @@ root = File.cwd!
 fixture_dir = root <> "/fixture_data"
 galleries_dir = fixture_dir <> "/galleries"
 
+mountain_pics = [
+    "20201025_162211",
+    "20201122_133607",
+    "20201122_140431",
+    "20201122_143350",
+    "20201122_152309",
+    "20201122_154452",
+    "20201122_160621",
+]
+
 defmodule Fixtures do
     def create_gallery_if_not_exists(name, path) do
         case Galleries.gallery_for_path(path) do
@@ -56,15 +66,7 @@ Enum.each(Galleries.list_pictures(), fn pic ->
     })
 end)
 
-[
-    "20201025_162211",
-    "20201122_133607",
-    "20201122_140431",
-    "20201122_143350",
-    "20201122_152309",
-    "20201122_154452",
-    "20201122_160621",
-]
+mountain_pics
 |> Enum.map(fn name -> switzerland.directory <> "/IMG_" <> name <> ".jpg" end)
 |> Enum.map(&Galleries.picture_by_path/1)
 |> Enum.filter(fn pic -> pic != nil end)
