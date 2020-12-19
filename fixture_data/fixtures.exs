@@ -34,39 +34,20 @@ IO.puts("====================")
 IO.puts(" Creating galleries")
 IO.puts("====================")
 
-cakes = Fixtures.create_gallery_if_not_exists("Cakes", galleries_dir <> "/cakes")
-mountains = Fixtures.create_gallery_if_not_exists("Mountains", galleries_dir <> "/mountains")
+switzerland = Fixtures.create_gallery_if_not_exists("Switzerland", galleries_dir <> "/switzerland")
 
 fixture_tag = Fixtures.create_tag_if_not_exists("yellow", "fixture", "Fixture picture for testing purposes")
-cake_tag = Fixtures.create_tag_if_not_exists("red", "cake", "Picture of a cake")
 mountain_tag = Fixtures.create_tag_if_not_exists("blue", "mountain", "Picture of a mountain")
 
 IO.puts("===================")
 IO.puts(" Creating pictures")
 IO.puts("===================")
 
-Scanner.index_gallery(cakes)
-Scanner.index_gallery(mountains)
+Scanner.index_gallery(switzerland)
 
 IO.puts("==================")
 IO.puts(" Tagging pictures")
 IO.puts("==================")
-
-Galleries.pictures_for_gallery!(cakes.id)
-|> Enum.each(fn pic ->
-    Galleries.create_picture_tag(%{
-        picture_id: pic.id,
-        tag_id: cake_tag.id,
-    })
-end)
-
-Galleries.pictures_for_gallery!(mountains.id)
-|> Enum.each(fn pic ->
-    Galleries.create_picture_tag(%{
-        picture_id: pic.id,
-        tag_id: mountain_tag.id,
-    })
-end)
 
 Enum.each(Galleries.list_pictures(), fn pic ->
     Galleries.create_picture_tag(%{
@@ -75,11 +56,30 @@ Enum.each(Galleries.list_pictures(), fn pic ->
     })
 end)
 
+[
+    "20201025_162211",
+    "20201122_133607",
+    "20201122_140431",
+    "20201122_143350",
+    "20201122_152309",
+    "20201122_154452",
+    "20201122_160621",
+]
+|> Enum.map(fn name -> switzerland.directory <> "/IMG_" <> name <> ".jpg" end)
+|> Enum.map(&Galleries.picture_by_path/1)
+|> Enum.filter(fn pic -> pic != nil end)
+|> Enum.each(fn pic ->
+    Galleries.create_picture_tag(%{
+        tag_id: mountain_tag.id,
+        picture_id: pic.id,
+    })
+end)
+
 IO.puts("=============================")
 IO.puts(" Creating missing thumbnails")
 IO.puts("=============================")
 
-Enum.each(Galleries.list_pictures(), fn pic ->
+Enum.each(Galleries.pictures_for_gallery!(switzerland.id), fn pic ->
     Scanner.create_thumb(pic)
 end)
 

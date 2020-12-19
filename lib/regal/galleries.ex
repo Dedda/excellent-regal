@@ -23,6 +23,10 @@ defmodule Regal.Galleries do
     |> Repo.insert()
   end
 
+  def gallery_for_path(nil) do
+    nil
+  end
+
   def gallery_for_path(path) do
     Repo.one(from g in Gallery, where: g.directory == ^path)
   end

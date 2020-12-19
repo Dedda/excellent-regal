@@ -15,6 +15,6 @@ defmodule Regal.Galleries.Gallery do
     gallery
     |> cast(attrs, [:name, :directory, :parent_id])
     |> unique_constraint([:directory])
-    |> validate_required([:name, :directory])
+    |> validate_required([:name])
   end
 end
