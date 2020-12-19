@@ -21,7 +21,7 @@ defmodule Regal.MixProject do
   def application do
     [
       mod: {Regal.Application, []},
-      extra_applications: [:crypto, :logger, :runtime_tools, :os_mon]
+      extra_applications: [:crypto, :logger, :runtime_tools, :os_mon, :sizeable]
     ]
   end
 
@@ -56,6 +56,7 @@ defmodule Regal.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:rustler, "~> 0.21.1"},
       {:uuid, "~> 1.1.8"},
+      {:sizeable, "~> 1.0"},
     ]
   end
 

@@ -1,4 +1,3 @@
-alias Regal.Configuration
 alias Regal.Galleries
 alias Regal.Scanner
 

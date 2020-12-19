@@ -31,7 +31,7 @@
 
   <li>
     <strong>Filesize:</strong>
-    <%= @picture.filesize %>
+    <%= @filesize %>
   </li>
 
   <li>
