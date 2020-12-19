@@ -20,28 +20,8 @@
   </li>
 
   <li>
-    <strong>Path:</strong>
-    <%= @picture.path %>
-  </li>
-
-  <li>
-    <strong>Sha1:</strong>
-    <%= @picture.sha1 %>
-  </li>
-
-  <li>
     <strong>Filesize:</strong>
     <%= @filesize %>
-  </li>
-
-  <li>
-    <strong>External:</strong>
-    <%= @picture.external_id %>
-  </li>
-
-  <li>
-    <strong>Rank:</strong>
-    <%= @picture.rank %>
   </li>
 </ul>
 
