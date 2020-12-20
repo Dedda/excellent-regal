@@ -11,6 +11,9 @@
         <%= link "Galleries", to: Routes.gallery_path(@conn, :index) %>
       </li>
       <li>
+        <%= link "Tags", to: Routes.tag_path(@conn, :index) %>
+      </li>
+      <li>
         <a href="https://github.com/Dedda/excellent-regal">Source</a>
       </li>
     </ul>

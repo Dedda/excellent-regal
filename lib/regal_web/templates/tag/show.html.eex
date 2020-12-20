@@ -17,6 +17,11 @@
     <%= @tag.color %>
   </li>
 
+  <li>
+    <strong>Tagged pictures</strong>
+    <%= @n_pics %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.tag_path(@conn, :edit, @tag) %></span>
