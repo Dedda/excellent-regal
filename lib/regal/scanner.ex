@@ -37,11 +37,18 @@ defmodule Regal.Scanner do
   end
 
   def create_thumb(%Picture{} = pic) do
-    {w, h} = Configuration.get_thumb_size!()
     thumb_path = Galleries.thumb_path_for_picture!(pic)
     if !File.exists?(thumb_path) do
-      Native.thumb_picture(pic.path, thumb_path, w, h)
+      spawn fn ->
+        :poolboy.transaction(:thumbs_worker, fn pid ->
+          GenServer.call(pid, {:generate_thumb, pic.path, thumb_path})
+        end, 1_000_000)
+      end
     end
+    #    {w, h} = Configuration.get_thumb_size!()
+#    if !File.exists?(thumb_path) do
+#      Native.thumb_picture(pic.path, thumb_path, w, h)
+#    end
   end
 
   defp find_picture_files_in_gallery(%Gallery{

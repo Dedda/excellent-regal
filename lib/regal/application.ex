@@ -14,9 +14,10 @@ defmodule Regal.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Regal.PubSub},
       # Start the Endpoint (http/https)
-      RegalWeb.Endpoint
+      RegalWeb.Endpoint,
       # Start a worker by calling: Regal.Worker.start_link(arg)
       # {Regal.Worker, arg}
+      :poolboy.child_spec(:thumbs_worker, thumbs_boy_config()),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -30,5 +31,14 @@ defmodule Regal.Application do
   def config_change(changed, _new, removed) do
     RegalWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp thumbs_boy_config do
+    [
+      name: {:local, :thumbs_worker},
+      worker_module: Regal.Worker.ThumbsWorker,
+      size: 6,
+      max_overflow: 0,
+    ]
   end
 end

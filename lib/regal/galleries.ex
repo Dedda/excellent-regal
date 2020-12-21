@@ -135,9 +135,8 @@ defmodule Regal.Galleries do
 
   def count_tagged_pictures(tag_id) do
     query = from pt in PictureTag,
-            where: pt.tag_id == ^tag_id,
-            select: count(pt.tag_id)
-    Repo.one!(query)
+            where: pt.tag_id == ^tag_id
+    count(query, :tag_id)
   end
 
   alias Regal.Galleries.GalleryPicture
@@ -190,5 +189,9 @@ defmodule Regal.Galleries do
 
   def thumb_path_for_picture!(pic) do
     Regal.Configuration.get_thumbs_dir!() <> "/" <> pic.external_id <> ".png"
+  end
+
+  defp count(query, field) do
+    Repo.aggregate(query, :count, field)
   end
 end
