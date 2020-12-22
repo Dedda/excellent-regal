@@ -29,7 +29,8 @@ defmodule RegalWeb.PictureController do
   def show(conn, %{"id" => id}) do
     picture = Galleries.get_picture!(id)
     filesize = Sizeable.filesize(picture.filesize)
-    render(conn, "show.html", picture: picture, filesize: filesize)
+    download_name = picture.external_id <> "/" <> picture.format
+    render(conn, "show.html", picture: picture, filesize: filesize, download_name: download_name)
   end
 
   def edit(conn, %{"id" => id}) do
