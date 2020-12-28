@@ -52,11 +52,26 @@ a {
   justify-content: flex-start;
 }
 
-.navbar div:not(:first-child) {
-  border-left: #606c76 1px solid;
-  padding-left: 3em;
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
 }
 
-.navbar div:not(:last-child) {
-  padding-right: 3em;
+.navbar li {
+  float: left;
+}
+
+.navbar a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #111;
 }

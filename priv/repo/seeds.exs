@@ -19,10 +19,10 @@ Configuration.create_config_value(%{
 
 Configuration.create_config_value(%{
   name: "thumb_size_w",
-  value: "500",
+  value: "250",
 })
 
 Configuration.create_config_value(%{
   name: "thumb_size_h",
-  value: "500",
+  value: "250",
 })

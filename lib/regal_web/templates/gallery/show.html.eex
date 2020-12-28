@@ -6,7 +6,7 @@
 <div class="gallery-wrapper">
 
   <%= for picture <- @pictures do %>
-  <div class="gallery-container w-2 h-2">
+  <div class="gallery-container w-1 h-1">
     <div class="gallery-item">
       <div class="image">
         <a href="<%= Routes.picture_path(@conn, :show, picture) %>">
