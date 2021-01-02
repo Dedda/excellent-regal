@@ -35,5 +35,8 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= @inner_content %>
     </main>
+    <footer role="contentinfo" class="container">
+      <p>Powered by <%= link "Phoenix", to: "https://www.phoenixframework.org/", target: "_blank" %></p>
+    </footer>
   </body>
 </html>
