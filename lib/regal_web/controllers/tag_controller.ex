@@ -29,7 +29,8 @@ defmodule RegalWeb.TagController do
   def show(conn, %{"id" => id}) do
     tag = Galleries.get_tag!(id)
     n_pics = Galleries.count_tagged_pictures(tag.id)
-    render(conn, "show.html", tag: tag, n_pics: n_pics)
+    pics = Galleries.pictures_by_tag(id)
+    render(conn, "show.html", tag: tag, n_pics: n_pics, pictures: pics)
   end
 
   def edit(conn, %{"id" => id}) do

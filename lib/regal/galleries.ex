@@ -133,6 +133,14 @@ defmodule Regal.Galleries do
     PictureTag.changeset(picture_tag, attrs)
   end
 
+  def pictures_by_tag(tag_id) do
+    query = from p in Picture,
+            join: pt in PictureTag, on: p.id == pt.picture_id,
+            where: pt.tag_id == ^tag_id,
+            select: p
+    Repo.all(query)
+  end
+
   def count_tagged_pictures(tag_id) do
     query = from pt in PictureTag,
             where: pt.tag_id == ^tag_id
