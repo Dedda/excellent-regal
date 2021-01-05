@@ -5,13 +5,8 @@
 
 <ul>
   <li>
-    <strong>Width:</strong>
-    <%= @picture.width %>
-  </li>
-
-  <li>
-    <strong>Height:</strong>
-    <%= @picture.height %>
+    <strong>Size:</strong>
+    <%= @picture.width %> x <%= @picture.height %>
   </li>
 
   <li>
