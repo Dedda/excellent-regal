@@ -13,12 +13,11 @@
   <tbody>
 <%= for tag <- @tags do %>
     <tr>
-      <td><%= tag.name %></td>
+      <td><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></td>
       <td><%= tag.description %></td>
-      <td><%= tag.color %></td>
+      <td><%= tag.color %><span class="dot tag-<%= tag.color %>"></span></td>
 
       <td>
-        <span><%= link "Show", to: Routes.tag_path(@conn, :show, tag) %></span>
         <span><%= link "Edit", to: Routes.tag_path(@conn, :edit, tag) %></span>
         <span><%= link "Delete", to: Routes.tag_path(@conn, :delete, tag), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>

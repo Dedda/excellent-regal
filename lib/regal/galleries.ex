@@ -113,6 +113,15 @@ defmodule Regal.Galleries do
 
   def get_picture_tag!(id), do: Repo.get!(PictureTag, id)
 
+  def tags_by_picture(pic_id) do
+    query = from t in Tag,
+                 join: pt in PictureTag, on: t.id == pt.tag_id,
+                 where: pt.picture_id == ^pic_id,
+                 select: t
+    Repo.all(query)
+  end
+
+
   def create_picture_tag(attrs \\ %{}) do
     %PictureTag{}
     |> PictureTag.changeset(attrs)

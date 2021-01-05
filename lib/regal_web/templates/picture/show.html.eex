@@ -25,6 +25,13 @@
   </li>
 </ul>
 
+<h3>Tags:</h3>
+<ul>
+  <%= for tag <- @tags do%>
+    <li><%= link tag.name, to: Routes.tag_path(@conn, :show, tag.id) %><span class="dot tag-<%= tag.color %>"></span></li>
+  <% end %>
+</ul>
+
 <span><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>
 <span><%= link "Back", to: Routes.picture_path(@conn, :index) %></span>
 <span><a href="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>" download="<%= @download_name %>">Download</a></span>
