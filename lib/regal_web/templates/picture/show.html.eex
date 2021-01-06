@@ -23,7 +23,7 @@
 <h3>Tags:</h3>
 <ul>
   <%= for tag <- @tags do%>
-    <li><%= link tag.name, to: Routes.tag_path(@conn, :show, tag.id) %><span class="dot tag-<%= tag.color %>"></span></li>
+    <li><%= link tag.name, to: Routes.tag_path(@conn, :show, tag.id) %><span class="tag-icon tag-<%= tag.color %>"></span></li>
   <% end %>
 </ul>
 

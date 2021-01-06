@@ -14,7 +14,7 @@
 
   <li>
     <strong>Color:</strong>
-    <%= @tag.color %><span class="dot tag-<%= @tag.color %>"></span>
+    <%= @tag.color %><span class="tag-icon tag-<%= @tag.color %>"></span>
   </li>
 
   <li>
