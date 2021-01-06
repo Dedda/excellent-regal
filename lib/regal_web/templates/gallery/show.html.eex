@@ -10,3 +10,5 @@
   <% end %>
 
 </div>
+
+<span><%= link "Delete", to: Routes.gallery_path(@conn, :delete, @gallery), method: :delete, data: [confirm: "Are you sure?"] %></span>

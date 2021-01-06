@@ -192,6 +192,16 @@ defmodule Regal.Galleries do
     Repo.all(from p in Picture, where: p.id in ^gallery_pictures)
   end
 
+  def get_gallery_thumb(gallery_id) do
+    query = from p in Picture,
+            join: gp in GalleryPicture, on: gp.picture_id == p.id,
+            where: gp.gallery_id == ^gallery_id,
+            select: p,
+            order_by: p.inserted_at,
+            limit: 1
+    Repo.one(query)
+  end
+
   def picture_by_path(path) do
     query = from p in Picture,
             where: p.path == ^path

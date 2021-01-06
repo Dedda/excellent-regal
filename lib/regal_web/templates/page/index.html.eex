@@ -1,21 +1,21 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Regal" %></h1>
+  <h1>Welcome to Regal!</h1>
   <p>A basic web based image gallery powered by <%= link "Phoenix", to: "https://www.phoenixframework.org/" %></p>
 </section>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <%= link "Galleries", to: Routes.gallery_path(@conn, :index) %>
-      </li>
-      <li>
-        <%= link "Tags", to: Routes.tag_path(@conn, :index) %>
-      </li>
-      <li>
-        <a href="https://github.com/Dedda/excellent-regal" target="_blank">Source</a>
-      </li>
-    </ul>
-  </article>
-</section>
+<article class="column">
+  <h2>Resources</h2>
+  <ul>
+    <li>
+      <%= link "Galleries", to: Routes.gallery_path(@conn, :index) %>
+    </li>
+    <li>
+      <%= link "Tags", to: Routes.tag_path(@conn, :index) %>
+    </li>
+    <li>
+      <a href="https://github.com/Dedda/excellent-regal" target="_blank">Source</a>
+    </li>
+  </ul>
+</article>
+
+<p><%= link "Credits", to: Routes.page_path(@conn, :credits) %></p>

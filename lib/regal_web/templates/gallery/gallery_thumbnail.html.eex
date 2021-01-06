@@ -1,0 +1,9 @@
+<div class="gallery-container w-1 h-1">
+  <div class="gallery-item">
+    <div class="image">
+      <a href="<%= Routes.gallery_path(@conn, :show, @gallery) %>">
+        <img src="<%= Routes.picture_path(@conn, :thumb, @picture.external_id) %>">
+      </a>
+    </div>
+  </div>
+</div>

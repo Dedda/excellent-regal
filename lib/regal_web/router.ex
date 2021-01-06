@@ -17,6 +17,7 @@ defmodule RegalWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/credits", PageController, :credits
     resources "/galleries", GalleryController
     resources "/pictures", PictureController
     get "/pictures/raw/:id", PictureController, :raw

@@ -1,27 +1,12 @@
-<h1>Listing Galleries</h1>
+<h1>Galleries</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Directory</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="gallery-wrapper">
 <%= for gallery <- @galleries do %>
-    <tr>
-      <td><%= link gallery.name, to: Routes.gallery_path(@conn, :show, gallery) %></td>
-      <td><%= gallery.directory %></td>
-
-      <td>
-        <span><%= link "Edit", to: Routes.gallery_path(@conn, :edit, gallery) %></span>
-        <span><%= link "Delete", to: Routes.gallery_path(@conn, :delete, gallery), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
+  <div>
+    <%= RegalWeb.GalleryView.gallery_thumbnail(@conn, gallery) %>
+    <p><%= link gallery.name, to: Routes.gallery_path(@conn, :show, gallery) %></p>
+  </div>
 <% end %>
-  </tbody>
-</table>
+</div>
 
 <span><%= link "New Gallery", to: Routes.gallery_path(@conn, :new) %></span>
