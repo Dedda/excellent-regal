@@ -15,7 +15,7 @@ defmodule RegalWeb.GalleryControllerTest do
   describe "index" do
     test "lists all galleries", %{conn: conn} do
       conn = get(conn, Routes.gallery_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Galleries"
+      assert html_response(conn, 200) =~ "Galleries"
     end
   end
 
