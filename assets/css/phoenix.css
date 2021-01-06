@@ -38,6 +38,14 @@ select {
   margin-bottom: 3rem;
   font-weight: 200;
   font-size: 120%;
+  color: #333333;
+}
+.phx-hero a {
+  color: #333366;
+  text-decoration: none;
+}
+.phx-hero a:hover {
+  text-decoration: underline;
 }
 .phx-hero input {
   background: #ffffff;
