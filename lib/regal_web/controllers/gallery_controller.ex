@@ -15,7 +15,8 @@ defmodule RegalWeb.GalleryController do
   end
 
   def create(conn, %{"gallery" => gallery_params}) do
-    case Galleries.create_gallery(gallery_params) do
+    params = Map.put(gallery_params, "directory", String.replace(gallery_params["directory"], "\\", "/"))
+    case Galleries.create_gallery(params) do
       {:ok, gallery} ->
         conn
         |> put_flash(:info, "Gallery created successfully.")
