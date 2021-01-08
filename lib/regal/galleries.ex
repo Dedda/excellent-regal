@@ -48,22 +48,22 @@ defmodule Regal.Galleries do
 
   def index_all_galleries do
     Repo.all(Gallery)
-    |> Enum.map(fn gallery ->
+    |> Enum.filter(fn gallery ->
       dir = gallery.directory
-      if dir != nil && File.exists?(dir) do
-        spawn fn ->
-          Scanner.index_gallery(gallery)
-          pictures_for_gallery!(gallery.id)
-          |> Enum.map(fn picture ->
-            spawn fn ->
-              if !File.exists?(thumb_path_for_picture!(picture)) do
-                Scanner.create_thumb(picture)
-              end
-            end
-          end)
-        end
-      end
+      dir != nil && File.exists?(dir)
     end)
+    |> Enum.flat_map(fn gallery ->
+      Scanner.index_gallery(gallery)
+      pictures_for_gallery!(gallery.id)
+      |> Enum.map(fn picture ->
+        Task.async fn ->
+          if !File.exists?(thumb_path_for_picture!(picture)) do
+            Scanner.create_thumb(picture)
+          end
+        end
+      end)
+    end)
+    |> Enum.map(&Task.await/1)
   end
 
   alias Regal.Galleries.Picture

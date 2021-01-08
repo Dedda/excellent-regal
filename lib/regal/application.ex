@@ -23,10 +23,7 @@ defmodule Regal.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Regal.Supervisor]
-
-    {:ok, startup} = Supervisor.start_link(children, opts)
-    spawn fn -> Regal.Galleries.index_all_galleries() end
-    {:ok, startup}
+    Supervisor.start_link(children, opts)
   end
 
   # Tell Phoenix to update the endpoint configuration
@@ -36,7 +33,7 @@ defmodule Regal.Application do
     :ok
   end
 
-  defp thumbs_boy_config do
+  def thumbs_boy_config do
     [
       name: {:local, :thumbs_worker},
       worker_module: Regal.Worker.ThumbsWorker,
