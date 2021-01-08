@@ -23,6 +23,9 @@ defmodule RegalWeb.GalleryController do
     params = Map.put(gallery_params, "directory", clean_dir)
     case Galleries.create_gallery(params) do
       {:ok, gallery} ->
+        if clean_dir != nil && File.exists?(clean_dir) do
+          Regal.Scanner.index_gallery(gallery)
+        end
         conn
         |> put_flash(:info, "Gallery created successfully.")
         |> redirect(to: Routes.gallery_path(conn, :show, gallery))

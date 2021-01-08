@@ -2,6 +2,7 @@ defmodule Regal.Galleries do
 
   import Ecto.Query, warn: false
   alias Regal.Repo
+  alias Regal.Scanner
 
   alias Regal.Galleries.Gallery
 
@@ -43,6 +44,26 @@ defmodule Regal.Galleries do
 
   def change_gallery(%Gallery{} = gallery, attrs \\ %{}) do
     Gallery.changeset(gallery, attrs)
+  end
+
+  def index_all_galleries do
+    Repo.all(Gallery)
+    |> Enum.map(fn gallery ->
+      dir = gallery.directory
+      if dir != nil && File.exists?(dir) do
+        spawn fn ->
+          Scanner.index_gallery(gallery)
+          pictures_for_gallery!(gallery.id)
+          |> Enum.map(fn picture ->
+            spawn fn ->
+              if !File.exists?(thumb_path_for_picture!(picture)) do
+                Scanner.create_thumb(picture)
+              end
+            end
+          end)
+        end
+      end
+    end)
   end
 
   alias Regal.Galleries.Picture
