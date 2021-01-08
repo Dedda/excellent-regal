@@ -15,7 +15,7 @@
     <tr>
       <td><%= link tag.name, to: Routes.tag_path(@conn, :show, tag) %></td>
       <td><%= tag.description %></td>
-      <td><%= tag.color %><span class="tag-icon tag-<%= tag.color %>"></span></td>
+      <td><%= tag.color %><%= RegalWeb.TagView.inline_tag(@conn, tag.color) %></td>
 
       <td>
         <span><%= link "Edit", to: Routes.tag_path(@conn, :edit, tag) %></span>

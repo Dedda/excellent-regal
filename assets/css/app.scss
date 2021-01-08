@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 @import "./phoenix.css";
 @import "./gallery";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 
 /* Alerts and form errors */
 body {
@@ -18,27 +19,33 @@ a {
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
 .alert-info {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+
 .alert-warning {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+
 .alert p {
   margin-bottom: 0;
 }
+
 .alert:empty {
   display: none;
 }
+
 .invalid-feedback {
   color: #a94442;
   display: block;
@@ -76,21 +83,22 @@ a {
   background-color: #111;
 }
 
-.tag-icon {
-  height: 10px;
-  width: 10px;
+.tag-inline {
   display: inline-block;
   margin-left: 5px;
   margin-right: 5px;
-  background-position: center;
 }
 
-.tag-yellow {
-  background: url(/images/tag-yellow.png);
-  background-size: contain;
+
+.tag-list-wrapper {
+  display: grid;
+  justify-content: start;
+  justify-items: start;
+  align-items: start;
+  grid-auto-flow: column;
+  margin-bottom: 1.5em;
 }
 
-.tag-blue {
-  background: url(/images/tag-blue.png);
-  background-size: contain;
+.tag-list-wrapper > * {
+  margin-right: 0.5em;
 }
