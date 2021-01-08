@@ -47,24 +47,10 @@ select {
 .phx-hero a:hover {
   text-decoration: underline;
 }
-.phx-hero input {
-  background: #ffffff;
-}
-.phx-logo {
-  min-width: 300px;
-  margin: 1rem;
-  display: block;
-}
-.phx-logo img {
-  width: auto;
-  display: block;
-}
 
 /* Headers */
 header {
   width: 100%;
-  background: #fdfdfd;
-  border-bottom: 1px solid #eaeaea;
   margin-bottom: 2rem;
 }
 header section {
@@ -88,8 +74,7 @@ header nav li {
   white-space: nowrap;
 }
 header nav ul {
-  margin: 1rem;
-  margin-top: 0;
+  margin: 0 1rem 1rem;
 }
 header nav a {
   display: block;
