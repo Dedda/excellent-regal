@@ -15,13 +15,17 @@ defmodule RegalWeb.GalleryController do
   end
 
   def create(conn, %{"gallery" => gallery_params}) do
-    params = Map.put(gallery_params, "directory", String.replace(gallery_params["directory"], "\\", "/"))
+    clean_dir = case gallery_params["directory"] do
+      nil -> nil
+      "" -> nil
+      dir -> String.replace(dir, "\\", "/")
+    end
+    params = Map.put(gallery_params, "directory", clean_dir)
     case Galleries.create_gallery(params) do
       {:ok, gallery} ->
         conn
         |> put_flash(:info, "Gallery created successfully.")
         |> redirect(to: Routes.gallery_path(conn, :show, gallery))
-
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -13,7 +13,7 @@
       <%= link "Tags", to: Routes.tag_path(@conn, :index) %>
     </li>
     <li>
-      <a href="https://github.com/Dedda/excellent-regal" target="_blank">Source</a>
+      <%= link "Source", to: "https://github.com/Dedda/excellent-regal", target: "_blank" %>
     </li>
   </ul>
 </article>
