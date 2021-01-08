@@ -4,8 +4,12 @@
 import "../css/app.scss"
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
-import '@fortawesome/fontawesome-free/js/regular'
-import '@fortawesome/fontawesome-free/js/brands'
+
+// Enable these only if needed:
+
+// import '@fortawesome/fontawesome-free/js/regular'
+// import '@fortawesome/fontawesome-free/js/brands'
+
 import './vue'
 
 // webpack automatically bundles all modules in your

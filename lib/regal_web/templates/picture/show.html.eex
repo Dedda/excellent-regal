@@ -30,4 +30,4 @@
   <span><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>
   <span><%= link "Back", to: Routes.picture_path(@conn, :index) %></span>
 </div>
-<span><i class="fas fa-download"></i><a href="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>" download="<%= @download_name %>">Download</a></span>
+<span><i class="fas fa-download icon-inline"></i><a href="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>" download="<%= @download_name %>">Download</a></span>
