@@ -5,9 +5,18 @@
 
 <div class="gallery-wrapper">
 
-  <%= for picture <- @pictures do %>
-  	<%= RegalWeb.PictureView.gallery_thumbnail(@conn, picture) %>
-  <% end %>
+    <%= for gallery <- @children do %>
+    <div>
+        <%= RegalWeb.GalleryView.gallery_thumbnail(@conn, gallery) %>
+        <p><%= link gallery.name, to: Routes.gallery_path(@conn, :show, gallery) %></p>
+    </div>
+    <% end %>
+    <%= for picture <- @pictures do %>
+    <div>
+        <%= RegalWeb.PictureView.gallery_thumbnail(@conn, picture) %>
+        <p><%= link picture.name, to: Routes.picture_path(@conn, :show, picture) %></p>
+    </div>
+    <% end %>
 
 </div>
 

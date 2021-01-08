@@ -3,8 +3,8 @@ defmodule Regal.Repo.Migrations.CreatePictureTags do
 
   def change do
     create table(:picture_tags) do
-      add :picture_id, references(:pictures, on_delete: :nothing)
-      add :tag_id, references(:tags, on_delete: :nothing)
+      add :picture_id, references(:pictures, on_delete: :delete_all)
+      add :tag_id, references(:tags, on_delete: :delete_all)
 
       timestamps()
     end

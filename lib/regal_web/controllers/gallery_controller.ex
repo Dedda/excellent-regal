@@ -5,7 +5,8 @@ defmodule RegalWeb.GalleryController do
   alias Regal.Galleries.Gallery
 
   def index(conn, _params) do
-    galleries = Galleries.list_galleries()
+    galleries = Galleries.list_top_galleries()
+    IO.inspect(galleries)
     render(conn, "index.html", galleries: galleries)
   end
 
@@ -24,7 +25,9 @@ defmodule RegalWeb.GalleryController do
     case Galleries.create_gallery(params) do
       {:ok, gallery} ->
         if clean_dir != nil && File.exists?(clean_dir) do
-          Regal.Scanner.index_gallery(gallery)
+          spawn fn ->
+            Regal.Scanner.index_gallery(gallery)
+          end
         end
         conn
         |> put_flash(:info, "Gallery created successfully.")
@@ -36,8 +39,9 @@ defmodule RegalWeb.GalleryController do
 
   def show(conn, %{"id" => id}) do
     gallery = Galleries.get_gallery!(id)
-    pictures = Galleries.pictures_for_gallery!(gallery.id)
-    render(conn, "show.html", gallery: gallery, pictures: pictures)
+    pictures = Galleries.pictures_for_gallery!(id)
+    sub_galleries = Galleries.list_child_galleries(id)
+    render(conn, "show.html", gallery: gallery, children: sub_galleries, pictures: pictures)
   end
 
   def edit(conn, %{"id" => id}) do

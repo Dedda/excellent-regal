@@ -10,6 +10,14 @@ defmodule Regal.Galleries do
     Repo.all(Gallery)
   end
 
+  def list_top_galleries do
+    Repo.all(from g in Gallery, where: is_nil(g.parent_id))
+  end
+
+  def list_child_galleries(parent_id) do
+    Repo.all(from g in Gallery, where: g.parent_id == ^parent_id)
+  end
+
   def get_gallery!(id), do: Repo.get!(Gallery, id)
 
   def get_sub_galleries(parent_id) do
@@ -19,11 +27,42 @@ defmodule Regal.Galleries do
   end
 
   def create_gallery(attrs \\ %{}) do
-    %Gallery{}
-    |> Gallery.changeset(attrs)
-    |> Repo.insert()
+    gallery = %Gallery{}
+              |> Gallery.changeset(attrs)
+              |> Repo.insert()
+    case gallery do
+      {:ok, g} -> if g.directory != nil && g.recursive do
+                    spawn fn ->
+                      :timer.sleep(1000)
+                      create_sub_galleries(g)
+                    end
+                  end
+    end
+    gallery
   end
 
+  def create_sub_galleries(parent = %Gallery{}) do
+    {:ok, files} = File.ls(parent.directory)
+    IO.inspect(files)
+    files
+    |> Enum.filter(fn name -> File.dir?(parent.directory <> "/" <> name) end)
+    |> Enum.map(fn name ->
+      IO.inspect(["Found sub folder:", name])
+      %{
+        name: name,
+        directory: parent.directory <> "/" <> name,
+        recursive: true,
+        parent_id: parent.id,
+      }
+    end)
+    |> Enum.map(&create_gallery/1)
+    |> Enum.each(fn g ->
+      case g do
+        {:ok, gallery} -> spawn(fn -> Scanner.index_gallery(gallery) end)
+      end
+    end)
+  end
+  
   def gallery_for_path(nil) do
     nil
   end

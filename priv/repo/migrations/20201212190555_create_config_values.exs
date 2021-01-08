@@ -5,7 +5,7 @@ defmodule Regal.Repo.Migrations.CreateConfigValues do
     create table(:config_values) do
       add :name, :string
       add :value, :string
-      add :parent, references(:config_values, on_delete: :nothing)
+      add :parent, references(:config_values, on_delete: :delete_all)
 
       timestamps()
     end

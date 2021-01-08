@@ -63,8 +63,7 @@ IO.puts("===================")
 IO.puts(" Creating pictures")
 IO.puts("===================")
 
-galleries
-|> Enum.each(&Scanner.index_gallery/1)
+Galleries.index_all_galleries()
 
 IO.puts("==================")
 IO.puts(" Tagging pictures")
@@ -95,9 +94,3 @@ end)
 IO.puts("=============================")
 IO.puts(" Creating missing thumbnails")
 IO.puts("=============================")
-
-galleries
-|> Enum.map(fn gallery -> gallery.id end)
-|> Enum.flat_map(&Galleries.pictures_for_gallery!/1)
-|> Enum.each(&Scanner.create_thumb/1)
-
