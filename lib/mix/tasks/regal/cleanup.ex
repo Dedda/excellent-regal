@@ -3,8 +3,9 @@ defmodule Mix.Tasks.Regal.Cleanup do
 
   import Ecto.Query, warn: false
 
-  alias Regal.Repo
   alias Regal.Configuration
+  alias Regal.FileHelper
+  alias Regal.Repo
 
   alias Regal.Galleries
   alias Regal.Galleries.GalleryPicture
@@ -35,7 +36,7 @@ defmodule Mix.Tasks.Regal.Cleanup do
     thumbs_dir = Configuration.get_thumbs_dir!()
     n_deleted = File.ls!(thumbs_dir)
                 |> Enum.reject(&File.dir?/1)
-                |> Enum.filter(fn name -> String.ends_with?(name, ".png") end)
+                |> Enum.filter(&FileHelper.is_png?/1)
                 |> Enum.map(fn name -> String.slice(name, 0..-5) end)
                 |> Enum.filter(fn ext_id ->
                      Galleries.get_picture_by_external_id(ext_id) == nil
@@ -46,5 +47,4 @@ defmodule Mix.Tasks.Regal.Cleanup do
                 |> Enum.count()
     IO.puts("Deleted #{n_deleted} thumbnails")
   end
-
 end

@@ -1,5 +1,7 @@
 defmodule Regal.Scanner do
 
+  import Regal.FileHelper
+
   alias Regal.Configuration
   alias Regal.Native
   alias Regal.Galleries
@@ -57,16 +59,10 @@ defmodule Regal.Scanner do
     |> Enum.map(fn file -> { dir <> "/" <> file, file, gallery_id } end)
   end
   
-  def accept_file(filename) do
+  defp accept_file(filename) do
     extension = filename
                 |> extension()
     !File.dir?(filename) && extension in @valid_extensions
-  end
-
-  defp extension(filename) do
-    filename
-    |> String.split(".")
-    |> List.last()
   end
 
   defp hash_file(path) do

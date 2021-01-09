@@ -8,7 +8,7 @@
     <%= for gallery <- @children do %>
     <div>
         <%= RegalWeb.GalleryView.gallery_thumbnail(@conn, gallery) %>
-        <p><%= link gallery.name, to: Routes.gallery_path(@conn, :show, gallery) %></p>
+        <p><i class="fas fa-folder-open icon-inline"></i><%= link gallery.name, to: Routes.gallery_path(@conn, :show, gallery) %></p>
     </div>
     <% end %>
     <%= for picture <- @pictures do %>
