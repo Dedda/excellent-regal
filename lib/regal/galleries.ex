@@ -274,6 +274,12 @@ defmodule Regal.Galleries do
     Repo.one!(pic_query)
   end
 
+  def get_picture_by_external_id(external_id) do
+    pic_query = from p in Picture,
+                     where: p.external_id == ^external_id
+    Repo.one(pic_query)
+  end
+
   def thumb_path_for_picture!(pic) do
     Regal.Configuration.get_thumbs_dir!() <> "/" <> pic.external_id <> ".png"
   end

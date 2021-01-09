@@ -6,7 +6,7 @@ defmodule Regal.Repo.Migrations.CreateGalleries do
       add :name, :string
       add :directory, :string
       add :recursive, :boolean, default: false
-      add :parent_id, references(:galleries, on_delete: :nothing)
+      add :parent_id, references(:galleries, on_delete: :delete_all)
 
       timestamps()
     end
