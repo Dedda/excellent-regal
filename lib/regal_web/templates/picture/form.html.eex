@@ -9,34 +9,6 @@
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
 
-  <%= label f, :width %>
-  <%= number_input f, :width %>
-  <%= error_tag f, :width %>
-
-  <%= label f, :height %>
-  <%= number_input f, :height %>
-  <%= error_tag f, :height %>
-
-  <%= label f, :format %>
-  <%= text_input f, :format %>
-  <%= error_tag f, :format %>
-
-  <%= label f, :path %>
-  <%= text_input f, :path %>
-  <%= error_tag f, :path %>
-
-  <%= label f, :sha1 %>
-  <%= text_input f, :sha1 %>
-  <%= error_tag f, :sha1 %>
-
-  <%= label f, :filesize %>
-  <%= number_input f, :filesize %>
-  <%= error_tag f, :filesize %>
-
-  <%= label f, :external_id %>
-  <%= text_input f, :external_id %>
-  <%= error_tag f, :external_id %>
-
   <%= label f, :rank %>
   <%= number_input f, :rank %>
   <%= error_tag f, :rank %>
