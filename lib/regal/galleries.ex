@@ -86,6 +86,7 @@ defmodule Regal.Galleries do
   end
 
   def index_all_galleries do
+    thumb_size = Regal.Configuration.get_thumb_size!()
     Repo.all(Gallery)
     |> Enum.filter(fn gallery ->
       dir = gallery.directory
@@ -97,7 +98,7 @@ defmodule Regal.Galleries do
       |> Enum.map(fn picture ->
         Task.async fn ->
           if !File.exists?(thumb_path_for_picture!(picture)) do
-            Scanner.create_thumb(picture)
+            Scanner.create_thumb(picture, thumb_size)
           end
         end
       end)

@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Regal.Cleanup do
   alias Regal.Galleries.GalleryPicture
   alias Regal.Galleries.Picture
 
-  def run(_) do
+  def run(_ \\ []) do
     Logger.configure([level: :info])
     Regal.TaskHelper.start_ecto()
 

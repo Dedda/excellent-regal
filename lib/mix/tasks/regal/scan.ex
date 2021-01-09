@@ -3,8 +3,7 @@ defmodule Mix.Tasks.Regal.Scan do
 
   alias Regal.TaskHelper
 
-  @shortdoc ""
-  def run(_) do
+  def run(_ \\ []) do
     Logger.configure([level: :info])
     TaskHelper.start_ecto()
     TaskHelper.start_poolboy()

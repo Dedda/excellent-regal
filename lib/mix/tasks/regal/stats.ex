@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Regal.Stats do
   alias Regal.Repo
   alias Regal.TaskHelper
 
-  def run(_) do
+  def run(_ \\ []) do
     Logger.configure([level: :info])
     TaskHelper.start_ecto()
 

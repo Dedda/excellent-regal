@@ -75,7 +75,7 @@ defmodule RegalWeb.PictureController do
     pic = Galleries.get_picture_by_external_id!(external_id)
     path = Galleries.thumb_path_for_picture!(pic)
     if !File.exists?(path) do
-      spawn fn -> Regal.Scanner.create_thumb(pic) end
+      spawn fn -> Regal.Scanner.create_thumb(pic, Regal.Configuration.get_thumb_size!()) end
     end
     data = File.read!(path)
     conn

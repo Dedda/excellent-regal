@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Regal.Gallery do
   alias Regal.TaskHelper
   alias Regal.Galleries
 
-  def run(args) do
+  def run(args \\ []) do
     TaskHelper.start_ecto()
     TaskHelper.start_poolboy()
 

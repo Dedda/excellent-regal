@@ -5,7 +5,7 @@ defmodule Mix.Tasks.Regal.Cc do
   alias Regal.FileHelper
   alias Regal.TaskHelper
 
-  def run(_) do
+  def run(_ \\ []) do
     Logger.configure([level: :info])
     TaskHelper.start_ecto()
     thumbs_dir = Configuration.get_thumbs_dir!()
