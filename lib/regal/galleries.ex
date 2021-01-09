@@ -26,23 +26,20 @@ defmodule Regal.Galleries do
     Repo.all(query)
   end
 
-  def create_gallery(attrs \\ %{}) do
+  def create_gallery(attrs \\ %{}, sync \\ false) do
     gallery = %Gallery{}
               |> Gallery.changeset(attrs)
               |> Repo.insert()
     case gallery do
       {:ok, g} -> if g.directory != nil && g.recursive do
-                    spawn fn ->
-                      :timer.sleep(1000)
-                      create_sub_galleries(g)
-                    end
+                    create_sub_galleries(g, sync)
                   end
-      {:error, _} ->
+                  {:ok, g}
+      err -> err
     end
-    gallery
   end
 
-  def create_sub_galleries(parent = %Gallery{}) do
+  def create_sub_galleries(parent = %Gallery{}, sync \\ false) do
     {:ok, files} = File.ls(parent.directory)
     files
     |> Enum.filter(fn name -> File.dir?(parent.directory <> "/" <> name) end)
@@ -57,11 +54,15 @@ defmodule Regal.Galleries do
     |> Enum.map(&create_gallery/1)
     |> Enum.each(fn g ->
       case g do
-        {:ok, gallery} -> spawn(fn -> Scanner.index_gallery(gallery) end)
+        {:ok, gallery} -> if sync do
+                            Scanner.index_gallery(gallery)
+                          else
+                            spawn(fn -> Scanner.index_gallery(gallery) end)
+                          end
       end
     end)
   end
-  
+
   def gallery_for_path(nil) do
     nil
   end
@@ -69,7 +70,7 @@ defmodule Regal.Galleries do
   def gallery_for_path(path) do
     Repo.one(from g in Gallery, where: g.directory == ^path)
   end
-  
+
   def update_gallery(%Gallery{} = gallery, attrs) do
     gallery
     |> Gallery.changeset(attrs)
@@ -248,7 +249,7 @@ defmodule Regal.Galleries do
                     where: gp.gallery_id == ^gallery_id
     gallery_pictures = Repo.all(gal_pic_query)
       |> Enum.map(fn gp -> gp.picture_id end)
-    Repo.all(from p in Picture, where: p.id in ^gallery_pictures)
+    Repo.all(from p in Picture, where: p.id in ^gallery_pictures, order_by: p.rank)
   end
 
   def get_gallery_thumb(gallery_id) do
