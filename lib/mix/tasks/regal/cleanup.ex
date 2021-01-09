@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Cleanup do
+defmodule Mix.Tasks.Regal.Cleanup do
   use Mix.Task
 
   import Ecto.Query, warn: false

@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Scan do
+defmodule Mix.Tasks.Regal.Scan do
   use Mix.Task
 
   alias Regal.TaskHelper
