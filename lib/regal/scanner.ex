@@ -62,7 +62,7 @@ defmodule Regal.Scanner do
   defp accept_file(filename) do
     extension = filename
                 |> extension()
-    !File.dir?(filename) && extension in @valid_extensions
+    !File.dir?(filename) && String.downcase(extension) in @valid_extensions
   end
 
   defp hash_file(path) do
