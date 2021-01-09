@@ -46,7 +46,7 @@ defmodule Regal.Scanner do
           GenServer.call(pid, {:generate_thumb, pic.path, thumb_path})
         end, 1_000_000)
       end)
-      |> Task.await()
+      |> Task.await(1_000_000)
     end
   end
 
