@@ -22,20 +22,22 @@ defmodule Regal.Scanner do
 
   def index_picture!({path, name, gallery_id}) do
     {w, h} = Configuration.get_thumb_size!()
-    {:ok, scanned_attrs} = Native.scan_picture(path, Configuration.get_thumbs_dir!(), w, h)
-    {:ok, %{size: size}} = File.stat(path)
-    pic_attrs = scanned_attrs
-                |> Map.from_struct()
-                |> Map.put(:filesize, size)
-                |> Map.put(:sha1, hash_file(path))
-                |> Map.put(:path, path)
-                |> Map.put(:name, name)
-                |> Map.put(:rank, 0)
-    {:ok, pic} = Galleries.create_picture(pic_attrs)
-    {:ok, _} = Galleries.create_gallery_picture(%{
-      gallery_id: gallery_id,
-      picture_id: pic.id,
-    })
+    case Native.scan_picture(path, Configuration.get_thumbs_dir!(), w, h) do
+      {:ok, scanned_attrs} -> {:ok, %{size: size}} = File.stat(path)
+                              pic_attrs = scanned_attrs
+                                          |> Map.from_struct()
+                                          |> Map.put(:filesize, size)
+                                          |> Map.put(:sha1, hash_file(path))
+                                          |> Map.put(:path, path)
+                                          |> Map.put(:name, name)
+                                          |> Map.put(:rank, 0)
+                              {:ok, pic} = Galleries.create_picture(pic_attrs)
+                              {:ok, _} = Galleries.create_gallery_picture(%{
+                                gallery_id: gallery_id,
+                                picture_id: pic.id,
+                              })
+      {:error, err} -> IO.puts("Error scanning file '#{name}': '#{err}'")
+    end
   end
 
   def create_thumb(%Picture{} = pic) do
