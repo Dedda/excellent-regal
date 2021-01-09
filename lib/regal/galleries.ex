@@ -37,17 +37,16 @@ defmodule Regal.Galleries do
                       create_sub_galleries(g)
                     end
                   end
+      {:error, _} ->
     end
     gallery
   end
 
   def create_sub_galleries(parent = %Gallery{}) do
     {:ok, files} = File.ls(parent.directory)
-    IO.inspect(files)
     files
     |> Enum.filter(fn name -> File.dir?(parent.directory <> "/" <> name) end)
     |> Enum.map(fn name ->
-      IO.inspect(["Found sub folder:", name])
       %{
         name: name,
         directory: parent.directory <> "/" <> name,

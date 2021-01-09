@@ -6,9 +6,9 @@ defmodule Regal.GalleriesTest do
   describe "galleries" do
     alias Regal.Galleries.Gallery
 
-    @valid_attrs %{directory: "some directory", name: "some name"}
-    @update_attrs %{directory: "some updated directory", name: "some updated name"}
-    @invalid_attrs %{directory: nil, name: nil}
+    @valid_attrs %{directory: "some directory", name: "some name", recursive: false}
+    @update_attrs %{directory: "some updated directory", name: "some updated name", recursive: false}
+    @invalid_attrs %{directory: nil, name: nil, recursive: false}
 
     def gallery_fixture(attrs \\ %{}) do
       {:ok, gallery} =

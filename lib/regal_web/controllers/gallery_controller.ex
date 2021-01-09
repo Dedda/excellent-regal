@@ -6,7 +6,6 @@ defmodule RegalWeb.GalleryController do
 
   def index(conn, _params) do
     galleries = Galleries.list_top_galleries()
-    IO.inspect(galleries)
     render(conn, "index.html", galleries: galleries)
   end
 
