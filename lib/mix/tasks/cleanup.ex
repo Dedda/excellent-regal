@@ -11,6 +11,7 @@ defmodule Mix.Tasks.Cleanup do
   alias Regal.Galleries.Picture
 
   def run(_) do
+    Logger.configure([level: :info])
     Regal.TaskHelper.start_ecto()
 
     delete_lose_pictures()
@@ -18,6 +19,7 @@ defmodule Mix.Tasks.Cleanup do
   end
 
   defp delete_lose_pictures do
+    IO.puts("\nLooking for dangling pictures...")
     lost_pics_query = from p in Picture,
                            left_join: gp in GalleryPicture, on: p.id == gp.picture_id,
                            where: is_nil(gp),
@@ -29,16 +31,20 @@ defmodule Mix.Tasks.Cleanup do
   end
 
   defp delete_lose_thumbs do
+    IO.puts("\nLooking for dangling thumbnails...")
     thumbs_dir = Configuration.get_thumbs_dir!()
-    File.ls!(thumbs_dir)
-    |> Enum.reject(&File.dir?/1)
-    |> Enum.map(fn name -> String.slice(name, 0..-5) end)
-    |> Enum.filter(fn ext_id ->
-      Galleries.get_picture_by_external_id(ext_id) == nil
-    end)
-    |> Enum.each(fn ext_id ->
-      File.rm(thumbs_dir <> "/" <> ext_id <> ".png")
-    end)
+    n_deleted = File.ls!(thumbs_dir)
+                |> Enum.reject(&File.dir?/1)
+                |> Enum.filter(fn name -> String.ends_with?(name, ".png") end)
+                |> Enum.map(fn name -> String.slice(name, 0..-5) end)
+                |> Enum.filter(fn ext_id ->
+                     Galleries.get_picture_by_external_id(ext_id) == nil
+                   end)
+                |> Enum.map(fn ext_id ->
+                     File.rm(thumbs_dir <> "/" <> ext_id <> ".png")
+                   end)
+                |> Enum.count()
+    IO.puts("Deleted #{n_deleted} thumbnails")
   end
 
 end
