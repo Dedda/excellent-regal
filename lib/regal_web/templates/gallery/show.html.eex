@@ -1,7 +1,9 @@
 <h1><%= @gallery.name %></h1>
 
-<span><%= link "Edit", to: Routes.gallery_path(@conn, :edit, @gallery) %></span>
-<span><%= link "Back", to: Routes.gallery_path(@conn, :index) %></span>
+<span><i class="fas fa-arrow-left icon-inline"></i><%= link "Back", to: (case @gallery.parent_id do
+                              nil -> Routes.gallery_path(@conn, :index)
+                              parent -> Routes.gallery_path(@conn, :show, parent)
+                           end) %></span>
 
 <div class="gallery-wrapper">
 
@@ -20,4 +22,5 @@
 
 </div>
 
-<span><%= link "Delete", to: Routes.gallery_path(@conn, :delete, @gallery), method: :delete, data: [confirm: "Are you sure?"] %></span>
+<span><i class="fas fa-pen icon-inline"></i><%= link "Edit", to: Routes.gallery_path(@conn, :edit, @gallery) %></span>
+<span><i class="fas fa-trash icon-inline"></i><%= link "Delete", to: Routes.gallery_path(@conn, :delete, @gallery), method: :delete, data: [confirm: "Are you sure?"] %></span>

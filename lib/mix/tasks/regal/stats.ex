@@ -21,11 +21,11 @@ defmodule Mix.Tasks.Regal.Stats do
   end
 
   defp print_gallery_stats do
-    IO.puts("#{Repo.aggregate(Gallery, :count, :id)} galleries.")
+    IO.puts("#{Repo.aggregate(Gallery, :count)} galleries.")
   end
 
   defp print_picture_stats do
-    IO.puts("#{Repo.aggregate(Picture, :count, :id)} pictures indexed.")
+    IO.puts("#{Repo.aggregate(Picture, :count)} pictures indexed.")
   end
 
   defp print_thumbs_stats do

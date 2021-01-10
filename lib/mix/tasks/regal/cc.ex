@@ -9,10 +9,12 @@ defmodule Mix.Tasks.Regal.Cc do
     Logger.configure([level: :info])
     TaskHelper.start_ecto()
     thumbs_dir = Configuration.get_thumbs_dir!()
-    thumbs_dir
-    |> File.ls!()
-    |> Enum.filter(&FileHelper.is_png?/1)
-    |> Enum.map(fn name -> "#{thumbs_dir}/#{name}" end)
+    thumbs = thumbs_dir
+             |> File.ls!()
+             |> Enum.filter(&FileHelper.is_png?/1)
+             |> Enum.map(fn name -> "#{thumbs_dir}/#{name}" end)
+    thumbs
     |> Enum.each(&File.rm/1)
+    IO.puts("Deleted #{Enum.count(thumbs)} thumbnails")
   end
 end

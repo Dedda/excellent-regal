@@ -11,4 +11,8 @@ defmodule Regal.TaskHelper do
     spec = :poolboy.child_spec(:thumbs_worker, Regal.Application.thumbs_boy_config())
     Supervisor.start_link([spec], opts)
   end
+
+  def await_with_timeout(timeout) do
+    fn task -> Task.await(task, timeout) end
+  end
 end

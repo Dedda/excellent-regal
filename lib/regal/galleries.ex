@@ -20,12 +20,6 @@ defmodule Regal.Galleries do
 
   def get_gallery!(id), do: Repo.get!(Gallery, id)
 
-  def get_sub_galleries(parent_id) do
-    query = from g in Gallery,
-            where: g.parent_id == ^parent_id
-    Repo.all(query)
-  end
-
   def create_gallery(attrs \\ %{}, sync \\ false) do
     gallery = %Gallery{}
               |> Gallery.changeset(attrs)
@@ -103,7 +97,7 @@ defmodule Regal.Galleries do
         end
       end)
     end)
-    |> Enum.map(&Task.await/1)
+    |> Enum.map(Regal.TaskHelper.await_with_timeout(1_000_000))
   end
 
   alias Regal.Galleries.Picture

@@ -15,7 +15,7 @@ defmodule Regal.Scanner do
     |> Enum.filter(fn {path, _, _} -> Galleries.picture_by_path(path) == nil end)
     |> Enum.each(&index_picture!/1)
     if rec do
-      Galleries.get_sub_galleries(gallery.id)
+      Galleries.list_child_galleries(gallery.id)
       |> Enum.each(&index_gallery/1)
     end
   end
