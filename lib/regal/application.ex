@@ -37,8 +37,16 @@ defmodule Regal.Application do
     [
       name: {:local, :thumbs_worker},
       worker_module: Regal.Worker.ThumbsWorker,
-      size: 6,
+      size: thumbs_boy_threads(:erlang.system_info(:logical_processors_available)),
       max_overflow: 0,
     ]
+  end
+
+  defp thumbs_boy_threads(1) do
+    1
+  end
+
+  defp thumbs_boy_threads(logical_cpus) do
+    logical_cpus - 1
   end
 end

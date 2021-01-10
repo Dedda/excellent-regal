@@ -45,7 +45,7 @@ defmodule Regal.Scanner do
     if !File.exists?(thumb_path) do
       Task.async(fn ->
         :poolboy.transaction(:thumbs_worker, fn pid ->
-          GenServer.call(pid, {:generate_thumb, pic.path, thumb_path, size})
+          GenServer.call(pid, {:generate_thumb, pic.path, thumb_path, size}, 1_000_000)
         end, 1_000_000)
       end)
       |> Task.await(1_000_000)
