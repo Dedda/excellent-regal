@@ -10,8 +10,6 @@ import '@fortawesome/fontawesome-free/js/solid'
 // import '@fortawesome/fontawesome-free/js/regular'
 // import '@fortawesome/fontawesome-free/js/brands'
 
-import './vue'
-
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
 // in "webpack.config.js".
@@ -22,3 +20,9 @@ import './vue'
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+
+var Elm = require('../elm/Main.elm');
+var mountNode = document.getElementById('elm_target');
+
+var app = Elm.Main.embed(mountNode);

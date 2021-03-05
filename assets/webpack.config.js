@@ -6,6 +6,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+var elmSource = __dirname;
+
 module.exports = (env, options) => {
   const devMode = options.mode !== 'production';
 
@@ -27,6 +29,14 @@ module.exports = (env, options) => {
     devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
     module: {
       rules: [
+        {
+          test: /\.elm$/,
+          exclude: [/node_modules/,/elmCss/],
+          use: devMode ? ['elm-hot-loader',
+                'elm-webpack-loader?verbose=true&warn=false&cwd=' + elmSource + '&debug=true']
+              : ['elm-hot-loader',
+                'elm-webpack-loader?verbose=true&warn=false&cwd=' + elmSource + '&debug=false']
+        },
         {
           test: /\.js$/,
           exclude: /node_modules/,
