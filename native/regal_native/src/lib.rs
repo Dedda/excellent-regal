@@ -55,9 +55,32 @@ fn thumb_picture<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error>
 }
 
 pub fn format_from_path(path: &str) -> &'static str {
-    match path.to_lowercase().split(".").last() {
-        Some("png") => "png",
-        Some("jpg") | Some("jpeg") => "jpeg",
-        _ => "",
+    if path.contains(".") {
+        match path.to_lowercase().split(".").last() {
+            Some("png") => "png",
+            Some("jpg") | Some("jpeg") => "jpeg",
+            _ => "",
+        }
+    } else {
+        ""
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::format_from_path;
+
+    #[test]
+    fn format_from_path_with_extension() {
+        assert_eq!("png", format_from_path("picture.png"));
+        assert_eq!("jpeg", format_from_path("picture.jpg"));
+        assert_eq!("jpeg", format_from_path("picture.jpeg"));
+    }
+
+    #[test]
+    fn format_from_path_without_extension() {
+        assert_eq!("", format_from_path("picturepng"));
+        assert_eq!("", format_from_path("picturejpg"));
+        assert_eq!("", format_from_path("jpeg"));
     }
 }
