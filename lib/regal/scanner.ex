@@ -60,8 +60,8 @@ defmodule Regal.Scanner do
     |> Enum.filter(&accept_file/1)
     |> Enum.map(fn file -> { dir <> "/" <> file, file, gallery_id } end)
   end
-  
-  defp accept_file(filename) do
+
+  def accept_file(filename) do
     extension = filename
                 |> extension()
     !File.dir?(filename) && String.downcase(extension) in @valid_extensions
