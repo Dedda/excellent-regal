@@ -7,7 +7,6 @@ defmodule Mix.Tasks.Regal.Cleanup do
   alias Regal.FileHelper
   alias Regal.Repo
 
-  alias Regal.Galleries
   alias Regal.Galleries.GalleryPicture
   alias Regal.Galleries.Picture
 
@@ -25,7 +24,7 @@ defmodule Mix.Tasks.Regal.Cleanup do
                          left_join: gp in GalleryPicture, on: p.id == gp.picture_id,
                          where: is_nil(gp),
                          select: p.id)
-    n_found = Enum.count(found_ids)
+    n_found = length(found_ids)
     IO.puts("Found #{n_found} lose pictures.")
     Repo.delete_all(from p in Picture, where: p.id in ^found_ids)
   end
@@ -44,7 +43,7 @@ defmodule Mix.Tasks.Regal.Cleanup do
                 |> Enum.map(fn ext_id ->
                      File.rm(thumbs_dir <> "/" <> ext_id <> ".png")
                    end)
-                |> Enum.count()
+                |> length()
     IO.puts("Deleted #{n_deleted} thumbnails")
   end
 end

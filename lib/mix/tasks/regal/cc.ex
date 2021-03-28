@@ -15,6 +15,6 @@ defmodule Mix.Tasks.Regal.Cc do
              |> Enum.map(fn name -> "#{thumbs_dir}/#{name}" end)
     thumbs
     |> Enum.each(&File.rm/1)
-    IO.puts("Deleted #{Enum.count(thumbs)} thumbnails")
+    IO.puts("Deleted #{length(thumbs)} thumbnails")
   end
 end
