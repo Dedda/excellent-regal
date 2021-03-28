@@ -6,9 +6,8 @@ defmodule Mix.Tasks.Regal.Stats do
   alias Regal.Galleries.Gallery
   alias Regal.Galleries.Picture
 
-  alias Regal.Configuration
-  alias Regal.FileHelper
   alias Regal.Repo
+  alias Regal.Statistics
   alias Regal.TaskHelper
 
   def run(_ \\ []) do
@@ -29,19 +28,8 @@ defmodule Mix.Tasks.Regal.Stats do
   end
 
   defp print_thumbs_stats do
-    thumbs_dir = Configuration.get_thumbs_dir!()
-    thumbs = thumbs_dir
-             |> File.ls!()
-             |> Enum.filter(&FileHelper.is_png?/1)
-             |> Enum.map(fn name -> File.stat("#{thumbs_dir}/#{name}") end)
-    size = thumbs
-           |> Enum.map(fn stats ->
-              case stats do
-                {:ok, s} -> s.size
-                _ -> 0
-              end
-           end)
-           |> Enum.sum()
-    IO.puts("#{Enum.count(thumbs)} thumbnails using #{Sizeable.filesize(size)} of disk space.")
+    thumbs_count = Statistics.thumbs_count()
+    thumbs_disk_usage = Statistics.thumbs_disk_usage()
+    IO.puts("#{thumbs_count} thumbnails using #{Sizeable.filesize(thumbs_disk_usage)} of disk space.")
   end
 end

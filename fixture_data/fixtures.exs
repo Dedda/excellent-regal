@@ -1,5 +1,4 @@
 alias Regal.Galleries
-alias Regal.Scanner
 
 root = File.cwd!
 fixture_dir = root <> "/fixture_data"

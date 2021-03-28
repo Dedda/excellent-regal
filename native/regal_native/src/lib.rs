@@ -55,7 +55,7 @@ fn thumb_picture<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error>
 }
 
 pub fn format_from_path(path: &str) -> &'static str {
-    if path.contains(".") {
+    if path.split("/").last().unwrap_or("").contains(".") {
         match path.to_lowercase().split(".").last() {
             Some("png") => "png",
             Some("jpg") | Some("jpeg") => "jpeg",
