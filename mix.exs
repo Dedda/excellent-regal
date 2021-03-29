@@ -11,7 +11,8 @@ defmodule Regal.MixProject do
       rustler_crates: rustler_crates(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -42,6 +43,7 @@ defmodule Regal.MixProject do
   defp deps do
     [
       {:junit_formatter, "~> 3.1", only: [:test]},
+      {:excoveralls, "~> 0.10"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
