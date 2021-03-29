@@ -1,9 +1,6 @@
 <h1><%= @gallery.name %></h1>
 
-<span><i class="fas fa-arrow-left icon-inline"></i><%= link "Back", to: (case @gallery.parent_id do
-                              nil -> Routes.gallery_path(@conn, :index)
-                              parent -> Routes.gallery_path(@conn, :show, parent)
-                           end) %></span>
+<span><i class="fas fa-arrow-left icon-inline"></i><a href="javascript:history.back()">Back</a></span>
 
 <div class="gallery-wrapper">
 

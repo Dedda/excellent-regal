@@ -1,5 +1,7 @@
 <h1>Showing: <%= @picture.name %></h1>
 
+<span><i class="fas fa-arrow-left icon-inline"></i><a href="javascript:history.back()">Back</a></span>
+
 <img src="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>"
   width="100%">
 
@@ -27,7 +29,6 @@
 </ul>
 
 <div>
-  <span><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>
-  <span><%= link "Back", to: Routes.picture_path(@conn, :index) %></span>
+	<span><i class="fas fa-pen icon-inline"></i><%= link "Edit", to: Routes.picture_path(@conn, :edit, @picture) %></span>
 </div>
 <span><i class="fas fa-download icon-inline"></i><a href="<%= Routes.picture_path(@conn, :raw, @picture.external_id) %>" download="<%= @download_name %>">Download</a></span>

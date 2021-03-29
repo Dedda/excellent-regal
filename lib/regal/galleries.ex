@@ -86,17 +86,7 @@ defmodule Regal.Galleries do
       dir = gallery.directory
       dir != nil && File.exists?(dir)
     end)
-    |> Enum.flat_map(fn gallery ->
-      Scanner.index_gallery(gallery)
-      pictures_for_gallery!(gallery.id)
-      |> Enum.map(fn picture ->
-        Task.async fn ->
-          if !File.exists?(thumb_path_for_picture!(picture)) do
-            Scanner.create_thumb(picture, thumb_size)
-          end
-        end
-      end)
-    end)
+    |> Enum.flat_map(&create_thumbs_in_gallery/1)
     |> Enum.map(Regal.TaskHelper.await_with_timeout(1_000_000))
   end
 
@@ -281,5 +271,18 @@ defmodule Regal.Galleries do
 
   defp count(query, field) do
     Repo.aggregate(query, :count, field)
+  end
+
+  defp create_thumbs_in_gallery(gallery) do
+    Scanner.index_gallery(gallery)
+    pictures_for_gallery!(gallery.id)
+    |> Enum.filter(fn picture ->
+      !File.exists?(thumb_path_for_picture!(picture))
+    end)
+    |> Enum.map(fn picture ->
+      Task.async fn ->
+          Scanner.create_thumb(picture, thumb_size)
+      end
+    end)
   end
 end

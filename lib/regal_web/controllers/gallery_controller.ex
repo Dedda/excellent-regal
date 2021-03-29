@@ -15,11 +15,7 @@ defmodule RegalWeb.GalleryController do
   end
 
   def create(conn, %{"gallery" => gallery_params}) do
-    clean_dir = case gallery_params["directory"] do
-      nil -> nil
-      "" -> nil
-      dir -> String.replace(dir, "\\", "/")
-    end
+    clean_dir = sanitize_path(gallery_params["directory"])
     params = Map.put(gallery_params, "directory", clean_dir)
     case Galleries.create_gallery(params) do
       {:ok, gallery} ->
@@ -70,5 +66,13 @@ defmodule RegalWeb.GalleryController do
     conn
     |> put_flash(:info, "Gallery deleted successfully.")
     |> redirect(to: Routes.gallery_path(conn, :index))
+  end
+
+  defp sanitize_path(path) do
+    case path do
+      nil -> nil
+      "" -> nil
+      dir -> String.replace(dir, "\\", "/")
+    end
   end
 end
