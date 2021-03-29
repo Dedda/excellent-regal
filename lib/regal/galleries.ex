@@ -46,13 +46,13 @@ defmodule Regal.Galleries do
       }
     end)
     |> Enum.map(&create_gallery/1)
-    |> Enum.each(fn g ->
-      case g do
-        {:ok, gallery} -> if sync do
-                            Scanner.index_gallery(gallery)
-                          else
-                            spawn(fn -> Scanner.index_gallery(gallery) end)
-                          end
+    |> Enum.filter(fn g -> elem(g, 0) == :ok end)
+    |> Enum.map(fn g -> elem(g, 1) end)
+    |> Enum.each(fn gallery ->
+      if sync do
+        Scanner.index_gallery(gallery)
+      else
+        spawn(fn -> Scanner.index_gallery(gallery) end)
       end
     end)
   end

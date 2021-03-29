@@ -19,11 +19,7 @@ defmodule RegalWeb.GalleryController do
     params = Map.put(gallery_params, "directory", clean_dir)
     case Galleries.create_gallery(params) do
       {:ok, gallery} ->
-        if clean_dir != nil && File.exists?(clean_dir) do
-          spawn fn ->
-            Regal.Scanner.index_gallery(gallery)
-          end
-        end
+        schedule_gallery_index(gallery)
         conn
         |> put_flash(:info, "Gallery created successfully.")
         |> redirect(to: Routes.gallery_path(conn, :show, gallery))
@@ -73,6 +69,14 @@ defmodule RegalWeb.GalleryController do
       nil -> nil
       "" -> nil
       dir -> String.replace(dir, "\\", "/")
+    end
+  end
+
+  defp schedule_gallery_index(gallery) do
+    if gallery.directory != nil && File.exists?(gallery.directory) do
+      spawn fn ->
+        Regal.Scanner.index_gallery(gallery)
+      end
     end
   end
 end

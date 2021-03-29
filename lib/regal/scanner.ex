@@ -32,10 +32,12 @@ defmodule Regal.Scanner do
                                           |> Map.put(:name, name)
                                           |> Map.put(:rank, 0)
                               {:ok, pic} = Galleries.create_picture(pic_attrs)
-                              {:ok, _} = Galleries.create_gallery_picture(%{
-                                gallery_id: gallery_id,
-                                picture_id: pic.id,
-                              })
+                              {:ok, _} = Galleries.create_gallery_picture(
+                                %{
+                                  gallery_id: gallery_id,
+                                  picture_id: pic.id,
+                                }
+                              )
       {:error, err} -> IO.puts("Error scanning file '#{name}': '#{err}'")
     end
   end
@@ -43,22 +45,20 @@ defmodule Regal.Scanner do
   def create_thumb(%Picture{} = pic, size) do
     thumb_path = Galleries.thumb_path_for_picture!(pic)
     if !File.exists?(thumb_path) do
-      Task.async(fn ->
-        :poolboy.transaction(:thumbs_worker, fn pid ->
-          GenServer.call(pid, {:generate_thumb, pic.path, thumb_path, size}, 1_000_000)
-        end, 1_000_000)
-      end)
+      schedule_thumbnail_creation(pic, thumb_path, size)
       |> Task.await(1_000_000)
     end
   end
 
-  defp find_picture_files_in_gallery(%Gallery{
-    :id => gallery_id,
-    :directory => dir,
-  }) do
+  defp find_picture_files_in_gallery(
+         %Gallery{
+           :id => gallery_id,
+           :directory => dir,
+         }
+       ) do
     File.ls!(dir)
     |> Enum.filter(&accept_file/1)
-    |> Enum.map(fn file -> { dir <> "/" <> file, file, gallery_id } end)
+    |> Enum.map(fn file -> {dir <> "/" <> file, file, gallery_id} end)
   end
 
   def accept_file(filename) do
@@ -71,6 +71,20 @@ defmodule Regal.Scanner do
     :crypto.hash(:sha, File.read!(path))
     |> Base.encode16()
     |> String.downcase()
+  end
+
+  defp schedule_thumbnail_creation(pic, thumb_path, size) do
+    Task.async(
+      fn ->
+        :poolboy.transaction(
+          :thumbs_worker,
+          fn pid ->
+             GenServer.call(pid, {:generate_thumb, pic.path, thumb_path, size}, 1_000_000)
+          end,
+          1_000_000
+        )
+      end
+    )
   end
 
 end
