@@ -80,7 +80,6 @@ defmodule Regal.Galleries do
   end
 
   def index_all_galleries do
-    thumb_size = Regal.Configuration.get_thumb_size!()
     Repo.all(Gallery)
     |> Enum.filter(fn gallery ->
       dir = gallery.directory
@@ -274,6 +273,7 @@ defmodule Regal.Galleries do
   end
 
   defp create_thumbs_in_gallery(gallery) do
+    thumb_size = Regal.Configuration.get_thumb_size!()
     Scanner.index_gallery(gallery)
     pictures_for_gallery!(gallery.id)
     |> Enum.filter(fn picture ->
