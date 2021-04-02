@@ -30,6 +30,19 @@ defmodule Regal.DataCase do
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Regal.Repo)
 
+    Regal.Configuration.create_config_value(%{
+      name: "thumbs_dir",
+      value: "?mixdir?/test/data",
+    })
+    Regal.Configuration.create_config_value(%{
+      name: "thumb_size_w",
+      value: "250",
+    })
+    Regal.Configuration.create_config_value(%{
+      name: "thumb_size_h",
+      value: "250",
+    })
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Regal.Repo, {:shared, self()})
     end

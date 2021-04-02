@@ -1,6 +1,7 @@
 defmodule Regal.Scanner do
 
   import Regal.FileHelper
+  import Regal.Hash
 
   alias Regal.Configuration
   alias Regal.Native
@@ -65,12 +66,6 @@ defmodule Regal.Scanner do
     extension = filename
                 |> extension()
     !File.dir?(filename) && String.downcase(extension) in @valid_extensions
-  end
-
-  defp hash_file(path) do
-    :crypto.hash(:sha, File.read!(path))
-    |> Base.encode16()
-    |> String.downcase()
   end
 
   defp schedule_thumbnail_creation(pic, thumb_path, size) do
