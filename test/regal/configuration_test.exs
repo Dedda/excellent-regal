@@ -19,6 +19,14 @@ defmodule Regal.ConfigurationTest do
       config_value
     end
 
+    test "necessary config values exist" do
+      found = Configuration.list_config_values()
+              |> Enum.map(fn val -> val.name end)
+      missing = ["thumbs_dir", "thumb_size_w", "thumb_size_h"]
+                |> Enum.reject(fn name -> Enum.member?(found, name) end)
+      assert [] == missing
+    end
+
     test "get_config_value!/1 returns the config_value with given id" do
       config_value = config_value_fixture()
       assert Configuration.get_config_value!(config_value.id) == config_value

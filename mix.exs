@@ -12,6 +12,7 @@ defmodule Regal.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
